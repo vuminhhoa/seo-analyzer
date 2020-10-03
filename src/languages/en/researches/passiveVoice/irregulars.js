@@ -1,5 +1,5 @@
 /**
- * Returns a list of english irregulars.
+ * Returns a list of en irregulars.
  *
  * @returns {string[]} English irregulars.
  */
