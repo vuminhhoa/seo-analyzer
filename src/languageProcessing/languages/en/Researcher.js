@@ -1,5 +1,4 @@
 import matchKeywordInSubheadings from "../../researches/base/matchKeywordInSubheadings.js";
-import relevantWords from "../../researches/_todo/relevantWords";
 import getProminentWordsForInsights from "../../researches/base/getProminentWordsForInsights";
 import getProminentWordsForInternalLinking from "../../researches/base/getProminentWordsForInternalLinking";
 import getWordForms from "../../researches/_todo/getWordForms";
@@ -38,7 +37,6 @@ export default class Researcher extends AbstractResearcher {
 			getSentenceBeginnings: getSentenceBeginnings,
 			functionWordsInKeyphrase: functionWordsInKeyphrase,
 			matchKeywordInSubheadings: matchKeywordInSubheadings,
-			relevantWords: relevantWords,
 			getLinkStatistics: getLinkStatistics,
 			keyphraseDistribution: keyphraseDistribution,
 			findKeywordInPageTitle: findKeywordInPageTitle,
