@@ -1,27 +1,26 @@
 import { inherits } from "util";
-import { createAnchorOpeningTag } from "../../../../../helpers/shortlinker";
+import { createAnchorOpeningTag } from "../../../helpers/shortlinker";
 
-import IntroductionKeywordAssessment from "../../../../assessments/seo/IntroductionKeywordAssessment";
-import KeyphraseLengthAssessment from "../../../../assessments/seo/KeyphraseLengthAssessment";
-import KeywordDensityAssessment from "../../../../assessments/seo/KeywordDensityAssessment";
-import MetaDescriptionKeywordAssessment from "../../../../assessments/seo/MetaDescriptionKeywordAssessment";
-import TextCompetingLinksAssessment from "../../../../assessments/seo/TextCompetingLinksAssessment";
-import InternalLinksAssessment from "../../../../assessments/seo/InternalLinksAssessment";
-import KeyphraseInSEOTitleAssessment from "../../../../assessments/seo/KeyphraseInSEOTitleAssessment";
-import SlugKeywordAssessment from "../../../../assessments/seo/UrlKeywordAssessment";
-import Assessor from "../../../../assessor";
-import TextTitleAssessment from "../../../assessments/TextTitleAssessment";
+import IntroductionKeywordAssessment from "../../assessments/seo/IntroductionKeywordAssessment";
+import KeyphraseLengthAssessment from "../../assessments/seo/KeyphraseLengthAssessment";
+import KeywordDensityAssessment from "../../assessments/seo/KeywordDensityAssessment";
+import MetaDescriptionKeywordAssessment from "../../assessments/seo/MetaDescriptionKeywordAssessment";
+import TextCompetingLinksAssessment from "../../assessments/seo/TextCompetingLinksAssessment";
+import InternalLinksAssessment from "../../assessments/seo/InternalLinksAssessment";
+import KeyphraseInSEOTitleAssessment from "../../assessments/seo/KeyphraseInSEOTitleAssessment";
+import SlugKeywordAssessment from "../../assessments/seo/UrlKeywordAssessment";
+import Assessor from "../../assessor";
 import SEOAssessor from "../seoAssessor";
-import MetaDescriptionLength from "../../../../assessments/seo/MetaDescriptionLengthAssessment";
-import SubheadingsKeyword from "../../../../assessments/seo/SubHeadingsKeywordAssessment";
-import ImageKeyphrase from "../../../../assessments/seo/KeyphraseInImageTextAssessment";
-import ImageCount from "../../../../assessments/seo/ImageCountAssessment";
-import TextLength from "../../../../assessments/seo/TextLengthAssessment";
-import OutboundLinks from "../../../../assessments/seo/OutboundLinksAssessment";
-import TitleWidth from "../../../../assessments/seo/PageTitleWidthAssessment";
-import FunctionWordsInKeyphrase from "../../../../assessments/seo/FunctionWordsInKeyphraseAssessment";
-import SingleH1Assessment from "../../../../assessments/seo/SingleH1Assessment";
-import KeyphraseDistribution from "../../../../assessments/seo/KeyphraseDistributionAssessment";
+import MetaDescriptionLength from "../../assessments/seo/MetaDescriptionLengthAssessment";
+import SubheadingsKeyword from "../../assessments/seo/SubHeadingsKeywordAssessment";
+import ImageKeyphrase from "../../assessments/seo/KeyphraseInImageTextAssessment";
+import ImageCount from "../../assessments/seo/ImageCountAssessment";
+import TextLength from "../../assessments/seo/TextLengthAssessment";
+import OutboundLinks from "../../assessments/seo/OutboundLinksAssessment";
+import TitleWidth from "../../assessments/seo/PageTitleWidthAssessment";
+import FunctionWordsInKeyphrase from "../../assessments/seo/FunctionWordsInKeyphraseAssessment";
+import SingleH1Assessment from "../../assessments/seo/SingleH1Assessment";
+import KeyphraseDistribution from "../../assessments/seo/KeyphraseDistributionAssessment";
 
 
 /**
@@ -138,10 +137,6 @@ const StorePostsAndPagesCornerstoneSEOAssessor = function( researcher, options )
 		new KeyphraseDistribution( {
 			urlTitle: createAnchorOpeningTag( "https://yoa.st/shopify30" ),
 			urlCallToAction: createAnchorOpeningTag( "https://yoa.st/shopify31" ),
-		} ),
-		new TextTitleAssessment( {
-			urlTitle: createAnchorOpeningTag( "https://yoa.st/shopify83" ),
-			urlCallToAction: createAnchorOpeningTag( "https://yoa.st/shopify84" ),
 		} ),
 	];
 };

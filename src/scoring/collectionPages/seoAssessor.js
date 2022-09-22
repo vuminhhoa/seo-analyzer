@@ -1,20 +1,19 @@
 import { inherits } from "util";
-import { createAnchorOpeningTag } from "../../../../helpers/shortlinker";
+import { createAnchorOpeningTag } from "../../helpers/shortlinker";
 
-import IntroductionKeywordAssessment from "../../../assessments/seo/IntroductionKeywordAssessment";
-import KeyphraseLengthAssessment from "../../../assessments/seo/KeyphraseLengthAssessment";
-import KeywordDensityAssessment from "../../../assessments/seo/KeywordDensityAssessment";
-import MetaDescriptionKeywordAssessment from "../../../assessments/seo/MetaDescriptionKeywordAssessment";
-import KeyphraseInSEOTitleAssessment from "../../../assessments/seo/KeyphraseInSEOTitleAssessment";
-import SlugKeywordAssessment from "../../../assessments/seo/UrlKeywordAssessment";
-import Assessor from "../../../assessor";
-import MetaDescriptionLengthAssessment from "../../../assessments/seo/MetaDescriptionLengthAssessment";
-import TextLengthAssessment from "../../../assessments/seo/TextLengthAssessment";
-import PageTitleWidthAssessment from "../../../assessments/seo/PageTitleWidthAssessment";
-import FunctionWordsInKeyphrase from "../../../assessments/seo/FunctionWordsInKeyphraseAssessment";
-import SingleH1Assessment from "../../../assessments/seo/SingleH1Assessment";
-import KeyphraseDistribution from "../../../assessments/seo/KeyphraseDistributionAssessment";
-import TextTitleAssessment from "../../assessments/TextTitleAssessment";
+import IntroductionKeywordAssessment from "./../assessments/seo/IntroductionKeywordAssessment";
+import KeyphraseLengthAssessment from "./../assessments/seo/KeyphraseLengthAssessment";
+import KeywordDensityAssessment from "./../assessments/seo/KeywordDensityAssessment";
+import MetaDescriptionKeywordAssessment from "./../assessments/seo/MetaDescriptionKeywordAssessment";
+import KeyphraseInSEOTitleAssessment from "../assessments/seo/KeyphraseInSEOTitleAssessment";
+import SlugKeywordAssessment from "../assessments/seo/UrlKeywordAssessment";
+import Assessor from "./../assessor";
+import MetaDescriptionLengthAssessment from "./../assessments/seo/MetaDescriptionLengthAssessment";
+import TextLengthAssessment from "./../assessments/seo/TextLengthAssessment";
+import PageTitleWidthAssessment from "./../assessments/seo/PageTitleWidthAssessment";
+import FunctionWordsInKeyphrase from "./../assessments/seo/FunctionWordsInKeyphraseAssessment";
+import SingleH1Assessment from "./../assessments/seo/SingleH1Assessment";
+import KeyphraseDistribution from "./../assessments/seo/KeyphraseDistributionAssessment";
 
 /**
  * Creates the Assessor used for collection pages.
@@ -83,10 +82,6 @@ const CollectionSEOAssessor = function( researcher, options ) {
 		new KeyphraseDistribution( {
 			urlTitle: createAnchorOpeningTag( "https://yoa.st/shopify30" ),
 			urlCallToAction: createAnchorOpeningTag( "https://yoa.st/shopify31" ),
-		} ),
-		new TextTitleAssessment( {
-			urlTitle: createAnchorOpeningTag( "https://yoa.st/shopify83" ),
-			urlCallToAction: createAnchorOpeningTag( "https://yoa.st/shopify84" ),
 		} ),
 	];
 };

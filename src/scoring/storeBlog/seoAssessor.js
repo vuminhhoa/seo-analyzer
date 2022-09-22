@@ -1,15 +1,14 @@
 import { inherits } from "util";
-import { createAnchorOpeningTag } from "../../../../helpers/shortlinker";
+import { createAnchorOpeningTag } from "../../helpers/shortlinker";
 
-import KeyphraseLengthAssessment from "../../../assessments/seo/KeyphraseLengthAssessment";
-import MetaDescriptionKeywordAssessment from "../../../assessments/seo/MetaDescriptionKeywordAssessment";
-import KeyphraseInSEOTitleAssessment from "../../../assessments/seo/KeyphraseInSEOTitleAssessment";
-import SlugKeywordAssessment from "../../../assessments/seo/UrlKeywordAssessment";
-import Assessor from "../../../assessor";
-import MetaDescriptionLength from "../../../assessments/seo/MetaDescriptionLengthAssessment";
-import TitleWidth from "../../../assessments/seo/PageTitleWidthAssessment";
-import FunctionWordsInKeyphrase from "../../../assessments/seo/FunctionWordsInKeyphraseAssessment";
-import TextTitleAssessment from "../../assessments/TextTitleAssessment";
+import KeyphraseLengthAssessment from "../assessments/seo/KeyphraseLengthAssessment";
+import MetaDescriptionKeywordAssessment from "../assessments/seo/MetaDescriptionKeywordAssessment";
+import KeyphraseInSEOTitleAssessment from "../assessments/seo/KeyphraseInSEOTitleAssessment";
+import SlugKeywordAssessment from "../assessments/seo/UrlKeywordAssessment";
+import Assessor from "../assessor";
+import MetaDescriptionLength from "../assessments/seo/MetaDescriptionLengthAssessment";
+import TitleWidth from "../assessments/seo/PageTitleWidthAssessment";
+import FunctionWordsInKeyphrase from "../assessments/seo/FunctionWordsInKeyphraseAssessment";
 /**
  * Creates the Assessor
  *
@@ -54,10 +53,6 @@ const StoreBlogSEOAssessor = function( researcher, options ) {
 		new FunctionWordsInKeyphrase( {
 			urlTitle: createAnchorOpeningTag( "https://yoa.st/shopify50" ),
 			urlCallToAction: createAnchorOpeningTag( "https://yoa.st/shopify51" ),
-		} ),
-		new TextTitleAssessment( {
-			urlTitle: createAnchorOpeningTag( "https://yoa.st/shopify83" ),
-			urlCallToAction: createAnchorOpeningTag( "https://yoa.st/shopify84" ),
 		} ),
 	];
 };

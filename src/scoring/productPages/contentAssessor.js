@@ -1,14 +1,15 @@
-import { createAnchorOpeningTag } from "../../../../../helpers/shortlinker";
-import WordComplexityAssessment from "../../../../assessments/readability/WordComplexityAssessment";
-import Assessor from "../../../../assessor.js";
-import ContentAssessor from "../../../../contentAssessor";
-import ParagraphTooLong from "../../../../assessments/readability/ParagraphTooLongAssessment.js";
-import SentenceLengthInText from "../../../../assessments/readability/SentenceLengthInTextAssessment.js";
-import SubheadingDistributionTooLong from "../../../../assessments/readability/SubheadingDistributionTooLongAssessment.js";
-import TransitionWords from "../../../../assessments/readability/TransitionWordsAssessment.js";
-import PassiveVoice from "../../../../assessments/readability/PassiveVoiceAssessment.js";
-import TextPresence from "../../../../assessments/readability/TextPresenceAssessment.js";
-import ListsPresence from "../../../../assessments/readability/ListAssessment.js";
+import { createAnchorOpeningTag } from "../../helpers/shortlinker";
+import WordComplexityAssessment from "../assessments/readability/WordComplexityAssessment";
+
+import Assessor from "../assessor.js";
+import ContentAssessor from "../contentAssessor";
+import ParagraphTooLong from "../assessments/readability/ParagraphTooLongAssessment.js";
+import SentenceLengthInText from "../assessments/readability/SentenceLengthInTextAssessment.js";
+import SubheadingDistributionTooLong from "../assessments/readability/SubheadingDistributionTooLongAssessment.js";
+import TransitionWords from "../assessments/readability/TransitionWordsAssessment.js";
+import PassiveVoice from "../assessments/readability/PassiveVoiceAssessment.js";
+import TextPresence from "../assessments/readability/TextPresenceAssessment.js";
+import ListsPresence from "../assessments/readability/ListAssessment.js";
 
 /**
  * Creates the Assessor
@@ -18,22 +19,15 @@ import ListsPresence from "../../../../assessments/readability/ListAssessment.js
  *
  * @constructor
  */
-const ProductCornerstoneContentAssessor = function( researcher, options ) {
+const ProductContentAssessor = function( researcher, options ) {
 	Assessor.call( this, researcher, options );
-	this.type = "productCornerstoneContentAssessor";
+	this.type = "productContentAssessor";
 
 	this._assessments = [
 		new SubheadingDistributionTooLong( {
-			parameters:	{
-				slightlyTooMany: 250,
-				farTooMany: 300,
-				recommendedMaximumLength: 250,
-			},
-			applicableIfTextLongerThan: 250,
 			shouldNotAppearInShortText: true,
 			urlTitle: createAnchorOpeningTag( options.subheadingUrlTitle ),
 			urlCallToAction: createAnchorOpeningTag( options.subheadingCTAUrl ),
-			cornerstoneContent: true,
 		} ),
 		new ParagraphTooLong( {
 			parameters: {
@@ -44,11 +38,11 @@ const ProductCornerstoneContentAssessor = function( researcher, options ) {
 			urlCallToAction: createAnchorOpeningTag( options.paragraphCTAUrl ),
 		}, true ),
 		new SentenceLengthInText( {
-			slightlyTooMany: 15,
-			farTooMany: 20,
+			slightlyTooMany: 20,
+			farTooMany: 25,
 			urlTitle: createAnchorOpeningTag( options.sentenceLengthUrlTitle ),
 			urlCallToAction: createAnchorOpeningTag( options.sentenceLengthCTAUrl ),
-		}, true, true ),
+		}, false, true ),
 		new TransitionWords( {
 			urlTitle: createAnchorOpeningTag( options.transitionWordsUrlTitle ),
 			urlCallToAction: createAnchorOpeningTag( options.transitionWordsCTAUrl ),
@@ -66,17 +60,14 @@ const ProductCornerstoneContentAssessor = function( researcher, options ) {
 			urlCallToAction: createAnchorOpeningTag( options.listsCTAUrl ),
 		} ),
 		new WordComplexityAssessment( {
-			scores: {
-				acceptableAmount: 3,
-			},
 			urlTitle: createAnchorOpeningTag( options.wordComplexityTitleUrl ),
 			urlCallToAction: createAnchorOpeningTag( options.wordComplexityCTAUrl ),
 		} ),
 	];
 };
 
-require( "util" ).inherits( ProductCornerstoneContentAssessor, ContentAssessor );
+require( "util" ).inherits( ProductContentAssessor, ContentAssessor );
 
 
-export default ProductCornerstoneContentAssessor;
+export default ProductContentAssessor;
 

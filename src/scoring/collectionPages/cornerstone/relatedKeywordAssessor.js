@@ -1,12 +1,12 @@
 import { inherits } from "util";
-import { createAnchorOpeningTag } from "../../../../../helpers/shortlinker";
+import { createAnchorOpeningTag } from "../../../helpers/shortlinker";
 
-import IntroductionKeywordAssessment from "../../../../assessments/seo/IntroductionKeywordAssessment";
-import KeyphraseLengthAssessment from "../../../../assessments/seo/KeyphraseLengthAssessment";
-import KeywordDensityAssessment from "../../../../assessments/seo/KeywordDensityAssessment";
-import MetaDescriptionKeywordAssessment from "../../../../assessments/seo/MetaDescriptionKeywordAssessment";
-import Assessor from "../../../../assessor";
-import FunctionWordsInKeyphrase from "../../../../assessments/seo/FunctionWordsInKeyphraseAssessment";
+import IntroductionKeywordAssessment from "./../../assessments/seo/IntroductionKeywordAssessment";
+import KeyphraseLengthAssessment from "./../../assessments/seo/KeyphraseLengthAssessment";
+import KeywordDensityAssessment from "./../../assessments/seo/KeywordDensityAssessment";
+import MetaDescriptionKeywordAssessment from "./../../assessments/seo/MetaDescriptionKeywordAssessment";
+import Assessor from "./../../assessor";
+import FunctionWordsInKeyphrase from "./../../assessments/seo/FunctionWordsInKeyphraseAssessment";
 
 /**
  * Creates the Assessor used for collection pages.
