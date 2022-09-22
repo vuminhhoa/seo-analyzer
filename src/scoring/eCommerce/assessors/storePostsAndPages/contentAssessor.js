@@ -1,20 +1,20 @@
-import { createAnchorOpeningTag } from "../../helpers/shortlinker";
-import WordComplexityAssessment from "../assessments/readability/WordComplexityAssessment";
-import Assessor from "../assessor.js";
-import ParagraphTooLong from "../assessments/readability/ParagraphTooLongAssessment.js";
-import SentenceLengthInText from "../assessments/readability/SentenceLengthInTextAssessment.js";
-import SubheadingDistributionTooLong from "../assessments/readability/SubheadingDistributionTooLongAssessment.js";
-import TransitionWords from "../assessments/readability/TransitionWordsAssessment.js";
-import PassiveVoice from "../assessments/readability/PassiveVoiceAssessment.js";
-import SentenceBeginnings from "../assessments/readability/SentenceBeginningsAssessment.js";
-import TextPresence from "../assessments/readability/TextPresenceAssessment.js";
+import { createAnchorOpeningTag } from "../../../../helpers/shortlinker";
+import WordComplexityAssessment from "../../../assessments/readability/WordComplexityAssessment";
+import Assessor from "../../../assessor.js";
+import ParagraphTooLong from "../../../assessments/readability/ParagraphTooLongAssessment.js";
+import SentenceLengthInText from "../../../assessments/readability/SentenceLengthInTextAssessment.js";
+import SubheadingDistributionTooLong from "../../../assessments/readability/SubheadingDistributionTooLongAssessment.js";
+import TransitionWords from "../../../assessments/readability/TransitionWordsAssessment.js";
+import PassiveVoice from "../../../assessments/readability/PassiveVoiceAssessment.js";
+import SentenceBeginnings from "../../../assessments/readability/SentenceBeginningsAssessment.js";
+import TextPresence from "../../../assessments/readability/TextPresenceAssessment.js";
 
 /*
 	Temporarily disabled:
 	var sentenceLengthInDescription = require( "./assessments/sentenceLengthInDescriptionAssessment.js" );
  */
 
-import scoreToRating from "../interpreters/scoreToRating";
+import scoreToRating from "../../../interpreters/scoreToRating";
 
 import { map } from "lodash-es";
 import { sum } from "lodash-es";

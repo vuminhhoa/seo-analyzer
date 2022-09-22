@@ -1,27 +1,27 @@
 import { inherits } from "util";
-import { createAnchorOpeningTag } from "../../../helpers/shortlinker";
-import Assessor from "../../assessor.js";
+import { createAnchorOpeningTag } from "../../../../helpers/shortlinker";
 
-import IntroductionKeyword from "../../assessments/seo/IntroductionKeywordAssessment.js";
-import KeyphraseLength from "../../assessments/seo/KeyphraseLengthAssessment.js";
-import KeywordDensity from "../../assessments/seo/KeywordDensityAssessment.js";
-import MetaDescriptionKeyword from "../../assessments/seo/MetaDescriptionKeywordAssessment.js";
-import TextCompetingLinks from "../../assessments/seo/TextCompetingLinksAssessment.js";
-import FunctionWordsInKeyphrase from "../../assessments/seo/FunctionWordsInKeyphraseAssessment";
-import ImageKeyphrase from "../../assessments/seo/KeyphraseInImageTextAssessment";
+import Assessor from "../../../assessor.js";
+import IntroductionKeyword from "../../../assessments/seo/IntroductionKeywordAssessment.js";
+import KeyphraseLength from "../../../assessments/seo/KeyphraseLengthAssessment.js";
+import KeywordDensity from "../../../assessments/seo/KeywordDensityAssessment.js";
+import MetaDescriptionKeyword from "../../../assessments/seo/MetaDescriptionKeywordAssessment.js";
+import ImageKeyphrase from "../../../assessments/seo/KeyphraseInImageTextAssessment";
+import TextCompetingLinks from "../../../assessments/seo/TextCompetingLinksAssessment.js";
+import FunctionWordsInKeyphrase from "../../../assessments/seo/FunctionWordsInKeyphraseAssessment";
 
 /**
  * Creates the Assessor
  *
- * @param {object} researcher       The researcher used for the analysis.
- * @param {Object} options          The options for this assessor.
- * @param {Object} options.marker   The marker to pass the list of marks to.
+ * @param {object}  researcher      The researcher to use for the analysis.
+ * @param {Object}  options         The options for this assessor.
+ * @param {Object}  options.marker  The marker to pass the list of marks to.
  *
  * @constructor
  */
-const StorePostsAndPagesCornerstoneRelatedKeywordAssessor = function( researcher, options ) {
+const StorePostsAndPagesRelatedKeywordAssessor = function( researcher, options ) {
 	Assessor.call( this, researcher, options );
-	this.type = "storePostsAndPagesCornerstoneRelatedKeywordAssessor";
+	this.type = "storePostsAndPagesRelatedKeywordAssessor";
 
 	this._assessments = [
 		new IntroductionKeyword( {
@@ -50,17 +50,12 @@ const StorePostsAndPagesCornerstoneRelatedKeywordAssessor = function( researcher
 			urlCallToAction: createAnchorOpeningTag( "https://yoa.st/shopify51" ),
 		} ),
 		new ImageKeyphrase( {
-			scores: {
-				withAltNonKeyword: 3,
-				withAlt: 3,
-				noAlt: 3,
-			},
 			urlTitle: createAnchorOpeningTag( "https://yoa.st/shopify22" ),
 			urlCallToAction: createAnchorOpeningTag( "https://yoa.st/shopify23" ),
 		} ),
 	];
 };
 
-inherits( StorePostsAndPagesCornerstoneRelatedKeywordAssessor, Assessor );
+inherits( StorePostsAndPagesRelatedKeywordAssessor, Assessor );
 
-export default StorePostsAndPagesCornerstoneRelatedKeywordAssessor;
+export default StorePostsAndPagesRelatedKeywordAssessor;

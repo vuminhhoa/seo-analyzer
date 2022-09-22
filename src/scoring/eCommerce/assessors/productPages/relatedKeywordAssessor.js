@@ -1,14 +1,14 @@
 import { inherits } from "util";
-import { createAnchorOpeningTag } from "../../../helpers/shortlinker";
-import Assessor from "../../assessor.js";
+import { createAnchorOpeningTag } from "../../../../helpers/shortlinker";
 
-import IntroductionKeyword from "../../assessments/seo/IntroductionKeywordAssessment.js";
-import KeyphraseLength from "../../assessments/seo/KeyphraseLengthAssessment.js";
-import KeywordDensity from "../../assessments/seo/KeywordDensityAssessment.js";
-import MetaDescriptionKeyword from "../../assessments/seo/MetaDescriptionKeywordAssessment.js";
-import ImageKeyphrase from "../../assessments/seo/KeyphraseInImageTextAssessment";
-import TextCompetingLinks from "../../assessments/seo/TextCompetingLinksAssessment.js";
-import FunctionWordsInKeyphrase from "../../assessments/seo/FunctionWordsInKeyphraseAssessment";
+import Assessor from "../../../assessor.js";
+import IntroductionKeyword from "../../../assessments/seo/IntroductionKeywordAssessment.js";
+import KeyphraseLength from "../../../assessments/seo/KeyphraseLengthAssessment.js";
+import KeywordDensity from "../../../assessments/seo/KeywordDensityAssessment.js";
+import MetaDescriptionKeyword from "../../../assessments/seo/MetaDescriptionKeywordAssessment.js";
+import ImageKeyphrase from "../../../assessments/seo/KeyphraseInImageTextAssessment";
+import TextCompetingLinks from "../../../assessments/seo/TextCompetingLinksAssessment.js";
+import FunctionWordsInKeyphrase from "../../../assessments/seo/FunctionWordsInKeyphraseAssessment";
 
 /**
  * Creates the Assessor
@@ -18,9 +18,9 @@ import FunctionWordsInKeyphrase from "../../assessments/seo/FunctionWordsInKeyph
  *
  * @constructor
  */
-const ProductCornerStoneRelatedKeywordAssessor = function( researcher, options ) {
+const ProductRelatedKeywordAssessor = function( researcher, options ) {
 	Assessor.call( this, researcher, options );
-	this.type = "productPageCornerstoneRelatedKeywordAssessor";
+	this.type = "productPageRelatedKeywordAssessor";
 
 	this._assessments = [
 		new IntroductionKeyword( {
@@ -55,17 +55,12 @@ const ProductCornerStoneRelatedKeywordAssessor = function( researcher, options )
 			urlCallToAction: createAnchorOpeningTag( options.functionWordsInKeyphraseCTAUrl ),
 		} ),
 		new ImageKeyphrase( {
-			scores: {
-				withAltNonKeyword: 3,
-				withAlt: 3,
-				noAlt: 3,
-			},
 			urlTitle: createAnchorOpeningTag( options.imageKeyphraseUrlTitle ),
 			urlCallToAction: createAnchorOpeningTag( options.imageKeyphraseCTAUrl ),
 		} ),
 	];
 };
 
-inherits( ProductCornerStoneRelatedKeywordAssessor, Assessor );
+inherits( ProductRelatedKeywordAssessor, Assessor );
 
-export default ProductCornerStoneRelatedKeywordAssessor;
+export default ProductRelatedKeywordAssessor;

@@ -1,27 +1,28 @@
 import { inherits } from "util";
-import { createAnchorOpeningTag } from "../../../helpers/shortlinker";
-import ImageAltTags from "../../assessments/seo/ImageAltTagsAssessment";
+import { createAnchorOpeningTag } from "../../../../../helpers/shortlinker";
+import ImageAltTags from "../../../../assessments/seo/ImageAltTagsAssessment";
 
-import IntroductionKeywordAssessment from "../../assessments/seo/IntroductionKeywordAssessment";
-import KeyphraseLengthAssessment from "../../assessments/seo/KeyphraseLengthAssessment";
-import KeywordDensityAssessment from "../../assessments/seo/KeywordDensityAssessment";
-import MetaDescriptionKeywordAssessment from "../../assessments/seo/MetaDescriptionKeywordAssessment";
-import TextCompetingLinksAssessment from "../../assessments/seo/TextCompetingLinksAssessment";
-import KeyphraseInSEOTitleAssessment from "../../assessments/seo/KeyphraseInSEOTitleAssessment";
-import SlugKeywordAssessment from "../../assessments/seo/UrlKeywordAssessment";
-import Assessor from "../../assessor";
+import IntroductionKeywordAssessment from "../../../../assessments/seo/IntroductionKeywordAssessment";
+import KeyphraseLengthAssessment from "../../../../assessments/seo/KeyphraseLengthAssessment";
+import KeywordDensityAssessment from "../../../../assessments/seo/KeywordDensityAssessment";
+import MetaDescriptionKeywordAssessment from "../../../../assessments/seo/MetaDescriptionKeywordAssessment";
+import TextCompetingLinksAssessment from "../../../../assessments/seo/TextCompetingLinksAssessment";
+import KeyphraseInSEOTitleAssessment from "../../../../assessments/seo/KeyphraseInSEOTitleAssessment";
+import SlugKeywordAssessment from "../../../../assessments/seo/UrlKeywordAssessment";
+import Assessor from "../../../../assessor";
+import TextTitleAssessment from "../../../assessments/TextTitleAssessment";
 import SEOAssessor from "../seoAssessor";
-import MetaDescriptionLength from "../../assessments/seo/MetaDescriptionLengthAssessment";
-import SubheadingsKeyword from "../../assessments/seo/SubHeadingsKeywordAssessment";
-import ImageKeyphrase from "../../assessments/seo/KeyphraseInImageTextAssessment";
-import ImageCount from "../../assessments/seo/ImageCountAssessment";
-import TextLength from "../../assessments/seo/TextLengthAssessment";
-import TitleWidth from "../../assessments/seo/PageTitleWidthAssessment";
-import FunctionWordsInKeyphrase from "../../assessments/seo/FunctionWordsInKeyphraseAssessment";
-import SingleH1Assessment from "../../assessments/seo/SingleH1Assessment";
-import KeyphraseDistribution from "../../assessments/seo/KeyphraseDistributionAssessment";
-import ProductIdentifiersAssessment from "../../assessments/seo/ProductIdentifiersAssessment";
-import ProductSKUAssessment from "../../assessments/seo/ProductSKUAssessment";
+import MetaDescriptionLength from "../../../../assessments/seo/MetaDescriptionLengthAssessment";
+import SubheadingsKeyword from "../../../../assessments/seo/SubHeadingsKeywordAssessment";
+import ImageKeyphrase from "../../../../assessments/seo/KeyphraseInImageTextAssessment";
+import ImageCount from "../../../../assessments/seo/ImageCountAssessment";
+import TextLength from "../../../../assessments/seo/TextLengthAssessment";
+import TitleWidth from "../../../../assessments/seo/PageTitleWidthAssessment";
+import FunctionWordsInKeyphrase from "../../../../assessments/seo/FunctionWordsInKeyphraseAssessment";
+import SingleH1Assessment from "../../../../assessments/seo/SingleH1Assessment";
+import KeyphraseDistribution from "../../../../assessments/seo/KeyphraseDistributionAssessment";
+import ProductIdentifiersAssessment from "../../../../assessments/seo/ProductIdentifiersAssessment";
+import ProductSKUAssessment from "../../../../assessments/seo/ProductSKUAssessment";
 
 /**
  * Creates the Assessor
@@ -152,6 +153,10 @@ const ProductCornerstoneSEOAssessor = function( researcher, options ) {
 			urlCallToAction: createAnchorOpeningTag( options.productSKUCTAUrl ),
 			assessVariants: options.assessVariants,
 			addSKULocation: options.addSKULocation,
+		} ),
+		new TextTitleAssessment( {
+			urlTitle: createAnchorOpeningTag( options.textTitleUrlTitle ),
+			urlCallToAction: createAnchorOpeningTag( options.textTitleCTAUrl ),
 		} ),
 	];
 };
