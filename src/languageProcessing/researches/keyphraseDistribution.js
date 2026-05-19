@@ -326,23 +326,14 @@ const mergeListItemSentences = ( sentences ) => {
 };
 
 /**
- * Determines which portions of the text did not receive a lot of content words from keyphrase and synonyms.
+ * Retrieves the sentences from the paper.
  *
- * @param {Paper}       paper		The paper to check the keyphrase distribution for.
- * @param {Researcher}  researcher	The researcher to use for analysis.
- *
- * @returns {KeyphraseDistributionResult} The scores of topic relevance per portion of text and an array of all word forms to highlight.
+ * @param {Paper} paper		The paper to retrieve the sentences from.
+ * @param {Function} customSentenceTokenizer Language-sepcific sentence tokenizer.
+ * @param {Function} matchWordCustomHelper Language-specific helper to match words.
+ * @returns {(Sentence|string)[]} An array of found sentences.
  */
-const keyphraseDistributionResearcher = function( paper, researcher ) {
-	const functionWords = researcher.getConfig( "functionWords" );
-	const matchWordCustomHelper = researcher.getHelper( "matchWordCustomHelper" );
-	const getContentWordsHelper = researcher.getHelper( "getContentWords" );
-	const wordsCharacterCount = researcher.getHelper( "wordsCharacterCount" );
-	const customSplitIntoTokensHelper = researcher.getHelper( "splitIntoTokensCustom" );
-	const customSentenceTokenizer = researcher.getHelper( "memoizedTokenizer" );
-
-	// Custom topic length criteria for languages that don't use the default value to determine whether a topic is long or short.
-	const topicLengthCriteria = researcher.getConfig( "topicLength" ).lengthCriteria;
+const retrieveSentences = ( paper, customSentenceTokenizer, matchWordCustomHelper )  => {
 	let sentences = [];
 	if ( matchWordCustomHelper ) {
 		// This is currently only applicable for Japanese.
@@ -356,6 +347,28 @@ const keyphraseDistributionResearcher = function( paper, researcher ) {
 		sentences = getSentencesFromTree( paper.getTree(), true );
 		sentences = mergeListItemSentences( sentences );
 	}
+	return sentences;
+};
+
+/**
+ * Determines which portions of the text did not receive a lot of content words from keyphrase and synonyms.
+ *
+ * @param {Paper}       paper		The paper to check the keyphrase distribution for.
+ * @param {Researcher}  researcher	The researcher to use for analysis.
+ *
+ * @returns {KeyphraseDistributionResult} The scores of topic relevance per portion of text and an array of all word forms to highlight.
+ */
+const keyphraseDistributionResearcher = ( paper, researcher ) => {
+	const functionWords = researcher.getConfig( "functionWords" );
+	const matchWordCustomHelper = researcher.getHelper( "matchWordCustomHelper" );
+	const getContentWordsHelper = researcher.getHelper( "getContentWords" );
+	const wordsCharacterCount = researcher.getHelper( "wordsCharacterCount" );
+	const customSplitIntoTokensHelper = researcher.getHelper( "splitIntoTokensCustom" );
+	const customSentenceTokenizer = researcher.getHelper( "memoizedTokenizer" );
+
+	// Custom topic length criteria for languages that don't use the default value to determine whether a topic is long or short.
+	const topicLengthCriteria = researcher.getConfig( "topicLength" ).lengthCriteria;
+	const sentences = retrieveSentences( paper, customSentenceTokenizer, matchWordCustomHelper );
 
 	const topicForms = researcher.getResearch( "morphology" );
 
