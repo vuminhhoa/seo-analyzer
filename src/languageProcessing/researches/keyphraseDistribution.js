@@ -382,10 +382,24 @@ const keyphraseDistributionResearcher = function( paper, researcher ) {
 	const numberOfSentences = sentences.length;
 	const keyphraseDistractionPercentage = getKeyphraseDistractionPercentage( numberOfSentences, maximizedSentenceScores );
 
-	return {
+	const result = {
 		sentencesToHighlight: flattenDeep( sentencesToHighlight ),
 		keyphraseDistractionPercentage: keyphraseDistractionPercentage,
 	};
+
+	// Strip the sentenceParentNode back-references that getSentencesFromTree set on the tree's sentences.
+	// Without this cleanup the tree carries a cycle (paragraph -> sentences[i] -> sentenceParentNode -> paragraph)
+	// that escapes into subsequent runResearch/analyze results once the tree is reused across calls
+	// (the tree-build dedup keeps this._paper's tree alive between cycles, so the cycle is no longer GC'd
+	// at the end of each research). getMarkingsInSentence has already consumed sentenceParentNode above,
+	// so it's safe to drop here.
+	if ( ! matchWordCustomHelper && paper.getTree() ) {
+		getSentencesFromTree( paper.getTree() ).forEach( sentence => {
+			delete sentence.sentenceParentNode;
+		} );
+	}
+
+	return result;
 };
 
 export {
