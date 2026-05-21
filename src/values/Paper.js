@@ -377,10 +377,13 @@ export default class Paper {
 		if ( this._attributes.locale !== paper._attributes.locale ) {
 			return false;
 		}
-		if ( ! isEqual( this._attributes.shortcodes, paper._attributes.shortcodes ) ) {
+		// Normalize undefined / null to [] before comparing: a paper deserialized from a payload that omits
+		// `shortcodes` or `wpBlocks` ends up with the attribute missing, but it produces the same tree as a
+		// paper that explicitly carries an empty array, so the two must compare as equal here.
+		if ( ! isEqual( this._attributes.shortcodes ?? [], paper._attributes.shortcodes ?? [] ) ) {
 			return false;
 		}
-		if ( ! isEqual( this._attributes.wpBlocks, paper._attributes.wpBlocks ) ) {
+		if ( ! isEqual( this._attributes.wpBlocks ?? [], paper._attributes.wpBlocks ?? [] ) ) {
 			return false;
 		}
 		return true;
