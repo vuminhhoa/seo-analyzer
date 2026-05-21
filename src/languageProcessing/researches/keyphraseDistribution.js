@@ -328,9 +328,9 @@ const mergeListItemSentences = ( sentences ) => {
 /**
  * Retrieves the sentences from the paper.
  *
- * @param {Paper} paper		The paper to retrieve the sentences from.
- * @param {Function} customSentenceTokenizer Language-sepcific sentence tokenizer.
- * @param {Function} matchWordCustomHelper Language-specific helper to match words.
+ * @param {Paper}    paper                  The paper to retrieve the sentences from.
+ * @param {Function} customSentenceTokenizer Language-specific sentence tokenizer.
+ * @param {Function} matchWordCustomHelper   Language-specific helper to match words.
  * @returns {(Sentence|string)[]} An array of found sentences.
  */
 const retrieveSentences = ( paper, customSentenceTokenizer, matchWordCustomHelper )  => {

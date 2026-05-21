@@ -1090,6 +1090,15 @@ export default class AnalysisWebWorker {
 	 *
 	 * The old assessor is used and their results are combined.
 	 *
+	 * Tree-sharing invariant: each related-keyphrase paper reuses the focus paper's HTML tree, since
+	 * the text and shortcodes are identical and only `keyword`/`synonyms` differ between them. This
+	 * means the same tree object is shared across the focus paper and every related-keyphrase paper
+	 * within one analyze cycle. Any research that mutates tree nodes (e.g. adds sentence-level
+	 * back-references like `sentenceParentNode`, or attaches transient state to nodes) must clean up
+	 * after itself before returning, otherwise, the mutation will leak into subsequent assessor passes
+	 * and into later `runResearch` calls that consume the cached tree. See `keyphraseDistribution` research
+	 * for an example of such a cleanup.
+	 *
 	 * @param {Paper}                 paper           The paper to analyze.
 	 * @param {Object}                relatedKeywords The related keyphrases to use in the analysis.
 	 *
@@ -1105,7 +1114,6 @@ export default class AnalysisWebWorker {
 				keyword: this._relatedKeywords[ key ].keyword,
 				synonyms: this._relatedKeywords[ key ].synonyms,
 			} );
-			// The HTML text and shortcodes are identical to the parent paper, so reuse its tree to avoid a rebuild per related keyphrase.
 			relatedPaper.setTree( paper.getTree() );
 
 			// We need to remember the key, since the SEO results are stored in an object, not an array.
@@ -1251,10 +1259,20 @@ export default class AnalysisWebWorker {
 	/**
 	 * Runs the specified research in the worker. Optionally pass a paper.
 	 *
+	 * Tree handling: when a paper is passed without a pre-built tree, the worker reuses its cached tree
+	 * if the paper's tree-relevant inputs match (see `Paper.hasSameTreeInputsAs`), otherwise it builds a
+	 * fresh one.
+	 *
+	 * Shortcode backfill (mutates the incoming paper): shortcodes are a site-wide registry that only
+	 * `analyze` receives from the main thread. A `runResearch` from a different source could potentially
+	 * arrive with no shortcodes set. When that happens, we copy the cached paper's shortcodes onto the incoming paper
+	 * so (a) `hasSameTreeInputsAs` can recognize the inputs as compatible and reuse the cached tree,
+	 * and (b) the fallback `build()` filters shortcode markers the same way the analyze tree did.
+	 * The cached array is cloned, so a later mutation on the incoming paper cannot leak back into the worker's cached paper.
+	 *
 	 * @param {number} id     The request id.
 	 * @param {string} name   The name of the research to run.
-	 * @param {Paper} [paper] The paper to run the research on if it shouldn't
-	 *                        be run on the latest paper.
+	 * @param {Paper} [paper=null] The paper to run the research on if it shouldn't be run on the latest paper.
 	 *
 	 * @returns {Object} The result of the research.
 	 */
@@ -1263,23 +1281,19 @@ export default class AnalysisWebWorker {
 		const morphologyData = this._researcher.getData( "morphology" );
 
 		const researcher = this._researcher;
-		// When a specific paper is passed we create a temporary new researcher.
+		// When a specific paper is passed, we create a temporary new researcher.
 		if ( paper !== null ) {
 			researcher.setPaper( paper );
 			researcher.addResearchData( "morphology", morphologyData );
 
-			// Build and set the tree if it's not been set before, reusing the worker's cached tree when the content matches.
 			if ( paper.getTree() === null ) {
-				// Shortcodes are a site-wide registry: when the caller omitted them, fall back to the worker's cached set
-				// so the tree-input comparison can hit and the fallback build still filters shortcode markers correctly.
 				const callerShortcodes = paper._attributes && paper._attributes.shortcodes;
 				const cachedShortcodes = this._paper && this._paper._attributes && this._paper._attributes.shortcodes;
 				if ( ( ! callerShortcodes || callerShortcodes.length === 0 ) && cachedShortcodes && cachedShortcodes.length > 0 ) {
-					paper._attributes.shortcodes = cachedShortcodes;
+					paper._attributes.shortcodes = [ ...cachedShortcodes ];
 				}
 
 				if ( this._paper !== null && this._paper.getTree() !== null && this._paper.hasSameTreeInputsAs( paper ) ) {
-					// The incoming paper has the same tree inputs as the worker's cached paper; reuse that tree instead of rebuilding.
 					paper.setTree( this._paper.getTree() );
 				} else {
 					const languageProcessor = new LanguageProcessor( researcher );
