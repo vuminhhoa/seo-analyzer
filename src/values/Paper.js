@@ -383,10 +383,7 @@ export default class Paper {
 		if ( ! isEqual( this._attributes.shortcodes ?? [], paper._attributes.shortcodes ?? [] ) ) {
 			return false;
 		}
-		if ( ! isEqual( this._attributes.wpBlocks ?? [], paper._attributes.wpBlocks ?? [] ) ) {
-			return false;
-		}
-		return true;
+		return isEqual( this._attributes.wpBlocks ?? [], paper._attributes.wpBlocks ?? [] );
 	}
 
 	/**
