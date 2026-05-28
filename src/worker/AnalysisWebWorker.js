@@ -1281,7 +1281,7 @@ export default class AnalysisWebWorker {
 		const morphologyData = this._researcher.getData( "morphology" );
 
 		const researcher = this._researcher;
-		// When a specific paper is passed, we create a temporary new researcher.
+		// When a specific paper is passed, we reuse the worker's researcher but rebind it to the passed paper.
 		if ( paper !== null ) {
 			researcher.setPaper( paper );
 			researcher.addResearchData( "morphology", morphologyData );
