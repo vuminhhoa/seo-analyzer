@@ -23,17 +23,23 @@ import TurkishResearcher from "./languages/tr/Researcher";
 import DefaultResearcher from "./languages/_default/Researcher";
 
 /*
- * This factory is deliberately NOT re-exported from the package root (`src/index.js`). The plugin's
- * webpack build turns that root index into the core `analysis` bundle, and each language Researcher
- * transitively pulls in ~2.4 MB of language data (function words, stemmers, etc.). Re-exporting from
- * the root therefore inlines every language into the core bundle (verified: 883 KB → 2.82 MB). Keeping
- * the factory in its own module that the root never imports leaves the core bundle untouched; the plugin
- * keeps loading per-language Researchers from their separate `js/dist/languages/<lang>.js` bundles, while
- * non-plugin consumers (Node apps, the web worker) import this module directly via `yoastseo/getResearcher`.
+ * This factory is deliberately NOT re-exported from the package root (`src/index.js`); it is shipped as
+ * its own entry point, `yoastseo/researcher`. The split is a conscious optimisation for consumers that
+ * load `yoastseo` as a bundler "external" — that is, the package root is provided once as a shared global
+ * (or shared chunk) rather than bundled into every consumer. Yoast SEO for WordPress does this (it exposes
+ * the root as the `window.yoast.analysis` global), but any webpack/Rollup setup can configure `yoastseo`
+ * as an external the same way.
  *
- * Importing this module does NOT cause the circular-dependency error that blocked exposing it from the
- * root: the language Researchers import the analysis core through the package root, but since the root no
- * longer imports the Researchers, loading them simply initializes the root index first and resolves cleanly.
+ * Each language Researcher transitively imports that language's data — function words, stemmers, transition
+ * words, etc. Re-exporting this factory from the package root would therefore pull *every* language
+ * (~2.4 MB) into whatever bundle imports the root, defeating that optimisation (measured: re-exporting from
+ * the root grew one such shared bundle from ~0.9 MB to ~2.8 MB). Keeping the factory on its own entry that
+ * the root never imports lets those consumers keep the shared root lean and load only the languages they
+ * actually need.
+ *
+ * Importing this module also avoids the circular-dependency error that blocked exposing the factory from
+ * the root: language Researchers import the analysis core via the package root, so as long as the root does
+ * not import the Researchers, loading a Researcher initialises the root first and resolves cleanly.
  */
 const researchers = {
 	ar: ArabicResearcher,
@@ -69,7 +75,7 @@ const researchersMap = new Map( Object.entries( researchers ) );
  *
  * @param {string} language The language code to resolve the Researcher for.
  *
- * @returns {Function} The Researcher class (not an instance).
+ * @returns {Researcher} The Researcher class (not an instance).
  */
 export default function getResearcher( language ) {
 	return researchersMap.get( language ) || DefaultResearcher;
