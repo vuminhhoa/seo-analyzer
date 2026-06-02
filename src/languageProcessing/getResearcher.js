@@ -22,6 +22,17 @@ import SwedishResearcher from "./languages/sv/Researcher";
 import TurkishResearcher from "./languages/tr/Researcher";
 import DefaultResearcher from "./languages/_default/Researcher";
 
+/**
+ * @typedef {import("./AbstractResearcher").Researcher} Researcher
+ */
+
+/**
+ * The language-specific Researcher class: a constructor. Instantiate it with `new` to get a
+ * {@link Researcher} instance.
+ *
+ * @typedef {typeof import("./AbstractResearcher").default} ResearcherClass
+ */
+
 /*
  * This factory is deliberately NOT re-exported from the package root (`src/index.js`); it is shipped as
  * its own entry point, `yoastseo/researcher`. The split is a conscious optimisation for consumers that
@@ -75,7 +86,8 @@ const researchersMap = new Map( Object.entries( researchers ) );
  *
  * @param {string} language The language code to resolve the Researcher for.
  *
- * @returns {Researcher} The Researcher class (not an instance).
+ * @returns {ResearcherClass} The language-specific Researcher class; instantiate it with `new` to get a
+ *                            {@link Researcher} instance.
  */
 export default function getResearcher( language ) {
 	return researchersMap.get( language ) || DefaultResearcher;
