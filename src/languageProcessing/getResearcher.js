@@ -23,7 +23,15 @@ import TurkishResearcher from "./languages/tr/Researcher";
 import DefaultResearcher from "./languages/_default/Researcher";
 
 /**
+ * @typedef {import("../values/Paper").default} Paper
  * @typedef {import("./AbstractResearcher").Researcher} Researcher
+ */
+
+/**
+ * The language-specific Researcher class: a constructor. Instantiate it with `new` to get a
+ * {@link Researcher} instance.
+ *
+ * @typedef {new (paper?: Paper) => Researcher} ResearcherClass
  */
 
 /*
@@ -79,7 +87,7 @@ const researchersMap = new Map( Object.entries( researchers ) );
  *
  * @param {string} language The language code to resolve the Researcher for.
  *
- * @returns {Researcher} The language-specific Researcher class; instantiate it with `new` to get a
+ * @returns {ResearcherClass} The language-specific Researcher class; instantiate it with `new` to get a
  *                            {@link Researcher} instance.
  */
 export default function getResearcher( language ) {
