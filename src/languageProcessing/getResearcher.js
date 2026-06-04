@@ -21,6 +21,7 @@ import SlovakResearcher from "./languages/sk/Researcher";
 import SwedishResearcher from "./languages/sv/Researcher";
 import TurkishResearcher from "./languages/tr/Researcher";
 import DefaultResearcher from "./languages/_default/Researcher";
+import getLanguage from "./helpers/language/getLanguage";
 
 /**
  * @typedef {import("../values/Paper").default} Paper
@@ -85,11 +86,15 @@ const researchersMap = new Map( Object.entries( researchers ) );
  * Resolves the language-specific Researcher class, falling back to the default Researcher when the
  * language is not supported.
  *
- * @param {string} language The language code to resolve the Researcher for.
+ * Accepts either a bare language code (`nl`) or a locale (`nl_NL`); a locale is reduced to its language
+ * part before lookup, matching how the rest of the package derives a language from a locale.
+ *
+ * @param {string} [languageOrLocale] The language code or locale to resolve the Researcher for.
  *
  * @returns {ResearcherClass} The language-specific Researcher class; instantiate it with `new` to get a
  *                            {@link Researcher} instance.
  */
-export default function getResearcher( language ) {
+export default function getResearcher( languageOrLocale ) {
+	const language = getLanguage( languageOrLocale || "" );
 	return researchersMap.get( language ) || DefaultResearcher;
 }
