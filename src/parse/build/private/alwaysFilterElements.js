@@ -19,6 +19,9 @@ const permanentFilters = [
 	// Filters for Elementor widgets
 	elementHasID( "breadcrumbs" ),
 	elementHasClass( "elementor-button-wrapper" ),
+	// Catches the classic button widget's <a> in Elementor V4, where the elementor-button-wrapper
+	// div is absent and the anchor is the first rendered child of the widget wrapper.
+	elementHasClass( "elementor-button" ),
 	elementHasClass( "elementor-divider" ),
 	elementHasClass( "elementor-spacer" ),
 	elementHasClass( "elementor-custom-embed" ),
