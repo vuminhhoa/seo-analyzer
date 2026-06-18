@@ -23,7 +23,10 @@ const permanentFilters = [
 	elementHasClass( "elementor-spacer" ),
 	elementHasClass( "elementor-custom-embed" ),
 	elementHasClass( "elementor-icon-wrapper" ),
-	elementHasClass( "elementor-icon-box-wrapper" ),
+	// Filter only the icon container inside the icon-box widget, not the wrapper that also holds
+	// the title and description text. The old elementor-icon-box-wrapper filter was too wide and
+	// silently removed the heading and description from analysis.
+	elementHasClass( "elementor-icon-box-icon" ),
 	elementHasClass( "elementor-counter" ),
 	elementHasClass( "elementor-progress-wrapper" ),
 	// This element is used for the progress bar widget title.
