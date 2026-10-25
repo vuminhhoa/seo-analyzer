@@ -27,7 +27,7 @@ export default class RelatedKeywordsAssessment extends Assessment {
       ctaType: 'fix',
       docUrl:
         'https://github.com/vuminhhoa/seo-analyzer/blob/main/docs/checklist.md#relatedkeywords',
-      priority: 'high',
+      priority: 'medium',
       title: 'Related keywords',
       content: {
         good: 'Related keyword density is optimized',

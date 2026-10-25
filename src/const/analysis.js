@@ -2,7 +2,9 @@ export const POINT = 100;
 export const priorityRate = {
   high: 1,
   medium: 0.75,
-  low: 0.5
+  low: 0.5,
+  // Shown to the user but not scored (e.g. "set a focus keyword").
+  info: 0
 };
 export const statusRate = {
   good: 1,
@@ -19,7 +21,11 @@ export const technicalSEOCategory = [
   'titleWidth',
   'textImages',
   'schema',
-  'singleTitle'
+  'productSchema',
+  'singleTitle',
+  'linkText',
+  'titleYear',
+  'imageFileNames'
 ];
 
 export const contentSEOCategory = [
@@ -36,7 +42,7 @@ export const contentSEOCategory = [
   'textParagraphTooLong',
   'subheadingsKeyword',
   'images',
-  'numberTitle',
   'metaDescriptionKeyword',
-  'relatedKeywords'
+  'relatedKeywords',
+  'subheadingDistribution'
 ];

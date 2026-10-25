@@ -31,7 +31,8 @@ export default class TextImagesAssessment extends Assessment {
       title: 'Alt text',
       content: {
         good: 'All images have descriptive and relevant alt text.',
-        improve: '',
+        improve:
+          'Some alt text repeats the keyword. Describe what the image shows instead: keyword-filled alt text can be treated as spam.',
         bad: 'Missing alt text. Add descriptive alt text for accessibility and SEO.'
       }
     };
@@ -71,11 +72,11 @@ export default class TextImagesAssessment extends Assessment {
   calculateResult(paper, i18n) {
     const imagesNoAlt = this.altTagsProperties.noAlt;
 
-    let status = '';
-    if (imagesNoAlt === this.imageCount || imagesNoAlt > 0) {
+    let status = 'good';
+    if (imagesNoAlt > 0) {
       status = 'bad';
-    } else {
-      status = 'good';
+    } else if (this.hasKeywordStuffedAlt(paper)) {
+      status = 'improve';
     }
 
     const score = this.getScore(this._config.priority, status);
@@ -113,7 +114,7 @@ export default class TextImagesAssessment extends Assessment {
       return '';
     }
 
-    const altText = shop?.name || 'Shop' + ' | ' + data?.title || 'Title';
+    const altText = `${shop?.name || 'Shop'} | ${data?.title || 'Title'}`;
 
     const parser = new DOMParser();
     const doc = parser.parseFromString(data.body, 'text/html');
@@ -127,6 +128,24 @@ export default class TextImagesAssessment extends Assessment {
     });
 
     return doc.body.innerHTML;
+  }
+
+  /**
+   * Checks whether any alt text repeats the keyword.
+   *
+   * @param {Paper} paper The paper.
+   * @returns {boolean} Whether an alt text contains the keyword more than once.
+   */
+  hasKeywordStuffedAlt(paper) {
+    const keyword = paper.getKeyword().trim().toLowerCase();
+    if (!keyword) {
+      return false;
+    }
+
+    const doc = new DOMParser().parseFromString(paper.getText(), 'text/html');
+    return Array.from(doc.querySelectorAll('img[alt]')).some(
+      img => img.getAttribute('alt').toLowerCase().split(keyword).length - 1 > 1
+    );
   }
 
   /**

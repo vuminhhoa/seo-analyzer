@@ -24,7 +24,7 @@ class KeyphraseAssessment extends Assessment {
         'https://github.com/vuminhhoa/seo-analyzer/blob/main/docs/checklist.md#keyphrase',
       ctaType: 'fix',
       fixPosition: 'keyword search',
-      priority: 'high',
+      priority: 'info',
       title: 'Use of main keyword',
       content: {
         improve: '',

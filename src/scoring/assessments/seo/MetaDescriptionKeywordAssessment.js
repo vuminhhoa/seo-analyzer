@@ -27,7 +27,7 @@ class MetaDescriptionKeywordAssessment extends Assessment {
 
     const defaultConfig = {
       id: 'metaDescriptionKeyword',
-      priority: 'high',
+      priority: 'medium',
       fixPosition: 'meta description',
       ctaType: 'fix',
       docUrl:

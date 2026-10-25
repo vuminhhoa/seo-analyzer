@@ -27,12 +27,13 @@ class SingleH1Assessment extends Assessment {
         'https://github.com/vuminhhoa/seo-analyzer/blob/main/docs/checklist.md#singleh1',
       fixPosition: 'description',
       ctaType: 'contactUs',
-      priority: 'high',
+      priority: 'medium',
       title: 'H1 tag',
       content: {
-        good: 'H1 tag is optimized.',
-        improve: 'You should use only one H1 tag',
-        bad: 'Missing H1 tag. Add one H1 to clearly define your page`s topic.'
+        good: 'The page has one H1 that states its main topic.',
+        improve:
+          'Use exactly one H1 as the main heading: it tells readers, screen readers and search engines what the page is about.',
+        bad: ''
       }
     };
 
@@ -76,12 +77,7 @@ class SingleH1Assessment extends Assessment {
     const h1sInText = (paper.getText().match(/<h1[\s>]/gi) || []).length;
     const totalH1s = (this._h1Count || 0) + h1sInText;
 
-    let status = 'bad';
-    if (totalH1s === 1) {
-      status = 'good';
-    } else if (totalH1s > 1) {
-      status = 'improve';
-    }
+    const status = totalH1s === 1 ? 'good' : 'improve';
 
     const score = this.getScore(this._config.priority, status);
 

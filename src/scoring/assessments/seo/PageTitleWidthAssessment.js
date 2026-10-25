@@ -27,11 +27,18 @@ export default class PageTitleWidthAssessment extends Assessment {
       ctaType: 'fix',
       priority: 'high',
       title: 'Meta title width',
+      // Google truncates titles to the device width (about 600px on desktop). Pass the measured
+      // `titleWidth` (pixels) for an exact check; otherwise characters are used as an estimate.
+      parameters: {
+        minWidth: 400,
+        maxWidth: 600,
+        minLength: 40,
+        maxLength: 60
+      },
       content: {
-        good: 'Title width is optimized, between 50 - 70 characters.',
-        improve: '',
-        bad:
-          'Title too long or too short. Aim for 50-70 characters for best display in search results.'
+        good: 'Title length is good, so it shows in full in search results.',
+        improve: 'The title is short. Use the space to describe the page more specifically (about 40-60 characters).',
+        bad: 'The title is too long and will be cut off in search results. Keep it to about 60 characters.'
       }
     };
 
@@ -66,13 +73,16 @@ export default class PageTitleWidthAssessment extends Assessment {
    * @returns {{score: number, body: React.JSX.Element, status: string}}
    */
   calculateResult(paper, i18n) {
-    const length = paper.getTitle().length;
+    const {minWidth, maxWidth, minLength, maxLength} = this._config.parameters;
+    const [size, min, max] = paper.hasTitleWidth()
+      ? [paper.getTitleWidth(), minWidth, maxWidth]
+      : [paper.getTitle().length, minLength, maxLength];
 
-    let status = '';
-    if (length <= 70 && length >= 50) {
-      status = 'good';
-    } else {
+    let status = 'good';
+    if (size > max) {
       status = 'bad';
+    } else if (size < min) {
+      status = 'improve';
     }
     const score = this.getScore(this._config.priority, status);
 

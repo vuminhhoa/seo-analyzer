@@ -27,11 +27,18 @@ export default class MetaDescriptionLengthAssessment extends Assessment {
       priority: 'high',
       fixPosition: 'meta description',
       title: 'Meta description length',
+      // Google sets no length limit but truncates snippets to the device width: roughly
+      // 120 characters on mobile and 155-160 on desktop.
+      parameters: {
+        minimum: 120,
+        maximum: 160
+      },
       content: {
-        good: 'Meta description is optimized, less than 160 characters.',
-        improve: 'Write a unique and compelling description of 150-160 characters.',
+        good: 'Meta description length is good (120-160 characters), so it shows in full on most devices.',
+        improve:
+          'Aim for 120-160 characters: shorter descriptions waste space, longer ones get cut off in search results.',
         bad:
-          'Missing meta description. Write a unique and compelling description under 160 characters.'
+          'Missing meta description. Write a unique summary of the page in 120-160 characters.'
       }
     };
 
@@ -69,17 +76,13 @@ export default class MetaDescriptionLengthAssessment extends Assessment {
   calculateResult(paper, i18n) {
     const length = paper.getDescription().length;
 
-    let status = '';
+    const {minimum, maximum} = this._config.parameters;
 
+    let status = 'good';
     if (length === 0) {
       status = 'bad';
-    }
-    if (length > 0 && (length < 150 || length > 160)) {
+    } else if (length < minimum || length > maximum) {
       status = 'improve';
-    }
-
-    if (length <= 160 && length >= 150) {
-      status = 'good';
     }
     const score = this.getScore(this._config.priority, status);
 

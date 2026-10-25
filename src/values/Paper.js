@@ -53,6 +53,7 @@ export default class Paper {
    * @param {Object}  [attributes.data]         Given data.
    * @param {Object}  [attributes.customData]         Custom data.
    * @param {Object}  [attributes.shopSettings]         Shop's settings.
+   * @param {Object}  [attributes.productSchema]        The page's Product structured data (JSON-LD object).
    * @param {string}  [attributes.textTitle]          The title of the text.
    * @param {string}  [attributes.writingDirection=LTR]   The writing direction of the paper. Defaults to left to right (LTR).
    * @param {boolean} [attributes.isFrontPage=false]  Whether the current page is the front page of the site. Defaults to false.
@@ -278,7 +279,16 @@ export default class Paper {
    * @returns {(function(): *)|boolean}
    */
   hasProductSchema() {
-    return this._attributes?.hasProductSchema || false;
+    return Boolean(this._attributes?.hasProductSchema || this._attributes?.productSchema);
+  }
+
+  /**
+   * Returns the page's Product structured data (the JSON-LD object), if the producer passed it.
+   *
+   * @returns {?Object} The Product schema.
+   */
+  getProductSchema() {
+    return this._attributes?.productSchema || null;
   }
 
   /**

@@ -10,7 +10,7 @@ This project is a fork of [`yoastseo`](https://github.com/Yoast/wordpress-seo/tr
 
 ## Features
 
-- **25 assessments** in two groups, technical SEO and content (see the [checklist](docs/checklist.md)).
+- **29 assessments** in two groups, technical SEO and content. Thresholds are checked against Google Search Central guidance (last reviewed October 2026); see the [checklist](docs/checklist.md) for each rule and its source.
 - **Weighted 0-100 score** based on each assessment's priority.
 - **Results grouped** by category or by status (`good` / `improve` / `bad`).
 - **i18n hooks** for every title, message and button label.
@@ -53,6 +53,10 @@ const { score, assessments } = assessor.getResult( "status" );
 Each assessment result has `id`, `title`, `status`, `score`, `priority` and a `body` (a React node you can render directly).
 
 If your page template renders H1s outside the analyzed text (for example a theme that prints the product title as `<h1>`), pass their number as `h1Count`. The H1 check adds them to the H1s in the text and expects exactly one in total.
+
+For product pages, pass the page's Product JSON-LD object as `productSchema`. The product structured data check then verifies the properties Google requires and recommends for merchant listings.
+
+For an exact title check, pass the title's pixel width as `titleWidth`. In the browser, `helpers.measureTextWidth( title )` measures it in the font Google uses for titles. Otherwise the check estimates from the number of characters.
 
 - `getResult( "category" )` groups results into technical SEO and content SEO.
 - `getResult( groupBy, false )` leaves out the score.

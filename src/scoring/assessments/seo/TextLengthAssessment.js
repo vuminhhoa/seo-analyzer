@@ -4,7 +4,6 @@ import {Text} from '@shopify/polaris';
 
 import Assessment from '../assessment';
 import AssessmentResult from '../../../values/AssessmentResult';
-import {countWordInHtml} from '@seo-analyzer/helpers';
 
 /**
  * Represents an assessment that checks the length of the text and gives feedback accordingly.
@@ -25,15 +24,21 @@ export default class TextLengthAssessment extends Assessment {
       ctaType: 'fix',
       docUrl:
         'https://github.com/vuminhhoa/seo-analyzer/blob/main/docs/checklist.md#textlength',
-      priority: 'high',
+      priority: 'medium',
       fixPosition: 'description',
       title: 'Text length',
+      // Google has no preferred word count; this only flags thin content. Thresholds follow the
+      // current Yoast SEO defaults and are doubled for languages counted in characters (Japanese).
+      parameters: {
+        recommendedMinimum: 300,
+        belowMinimum: 200
+      },
       content: {
-        good: 'Text length is optimized.',
+        good: 'The text has enough content to cover the topic.',
         improve:
-          'Content length is acceptable, but could be expanded to 2,500 characters for more value.',
+          'The text is a little short (under 300 words). Add details that help readers, not filler.',
         bad:
-          'Insufficient content. Aim for at least 600 words to provide value and rank well in search results.'
+          'The text is thin (under 200 words). Add useful information such as details, uses or answers to common questions.'
       }
     };
 
@@ -51,6 +56,7 @@ export default class TextLengthAssessment extends Assessment {
    * @returns {AssessmentResult} The result of the assessment, containing both a score and a descriptive text.
    */
   getResult({paper, researcher, i18n}) {
+    this._wordCount = researcher.getResearch('wordCountInText');
     const calculatedResult = this.calculateResult(paper, i18n);
 
     const assessmentResult = new AssessmentResult({config: this._config});
@@ -68,16 +74,15 @@ export default class TextLengthAssessment extends Assessment {
    * @returns {{score: number, body: React.JSX.Element, status: string}}
    */
   calculateResult(paper, i18n) {
-    const {wordCount, charCount} = countWordInHtml(paper.getText(), true);
-    let status = 'bad';
-    if (charCount < 2500 && wordCount >= 600) {
-      status = 'improve';
-    }
-    if (wordCount < 600 && charCount < 2500) {
+    const {count, unit} = this._wordCount;
+    const factor = unit === 'character' ? 2 : 1;
+    const {recommendedMinimum, belowMinimum} = this._config.parameters;
+
+    let status = 'good';
+    if (count < belowMinimum * factor) {
       status = 'bad';
-    }
-    if (charCount >= 2500 && wordCount >= 600) {
-      status = 'good';
+    } else if (count < recommendedMinimum * factor) {
+      status = 'improve';
     }
 
     const score = this.getScore(this._config.priority, status);

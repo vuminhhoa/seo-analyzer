@@ -26,9 +26,10 @@ export default class SchemaAssessment extends Assessment {
       ctaType: 'contactUs',
       title: 'Schema',
       content: {
-        good: 'Schema markup is applied effectively.',
+        good: 'Structured data (schema) is set up for this page.',
         improve: '',
-        bad: 'No schema markup applied. Add schema to optimize visibility for search engines.'
+        bad:
+          'No structured data found. Add Product schema (products) or Article schema (blog posts) so the page can show rich results such as price and ratings.'
       }
     };
 
@@ -42,24 +43,29 @@ export default class SchemaAssessment extends Assessment {
    * @param i18n
    * @returns {{score: number, body: React.JSX.Element, status: string}}
    */
-  calculateResult(paper, i18n) {
-    let status = '';
+  /**
+   * Detects the kind of page from its URL, using Shopify's URL structure.
+   *
+   * @param {Paper} paper The paper.
+   * @returns {?string} "product" (products and collections), "article" (blog posts) or null.
+   */
+  getPageType(paper) {
     const url = paper.getSlug();
-    const shopSettings = paper.getShopSettings();
     if (url.includes('product') || url.includes('collection')) {
-      if (paper.hasProductSchema()) {
-        status = 'good';
-      } else {
-        status = 'bad';
-      }
+      return 'product';
     }
     if (url.includes('blogs')) {
-      if (shopSettings?.blogPostsAndArticle?.status) {
-        status = 'good';
-      } else {
-        status = 'bad';
-      }
+      return 'article';
     }
+    return null;
+  }
+
+  calculateResult(paper, i18n) {
+    const hasSchema =
+      this.getPageType(paper) === 'product'
+        ? paper.hasProductSchema()
+        : Boolean(paper.getShopSettings()?.blogPostsAndArticle?.status);
+    const status = hasSchema ? 'good' : 'bad';
 
     const score = this.getScore(this._config.priority, status);
 
@@ -91,7 +97,7 @@ export default class SchemaAssessment extends Assessment {
     const calculatedResult = this.calculateResult(paper, i18n);
     const assessmentResult = new AssessmentResult({config: this._config});
 
-    assessmentResult.setStatus(calculatedResult.status);
+    assessmentResult.setScore(calculatedResult.score);
     assessmentResult.setStatus(calculatedResult.status);
     assessmentResult.setBody(calculatedResult.body);
 
@@ -106,6 +112,6 @@ export default class SchemaAssessment extends Assessment {
    * @returns {boolean} Returns true if the language is available and the paper is not empty.
    */
   isApplicable(paper, researcher) {
-    return paper.hasShopSettings() && paper.hasSlug();
+    return paper.hasShopSettings() && paper.hasSlug() && this.getPageType(paper) !== null;
   }
 }

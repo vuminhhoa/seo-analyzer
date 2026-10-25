@@ -59,6 +59,6 @@ export default class CombinedAssessor {
     });
 
     const maxPoint = getMaxPoint(this.assessments);
-    return Math.round((point * 100) / maxPoint);
+    return maxPoint > 0 ? Math.round((point * 100) / maxPoint) : 0;
   }
 }

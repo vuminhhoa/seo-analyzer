@@ -17,7 +17,7 @@ const STATUS_TONE = { good: "success", improve: "warning", bad: "critical" };
 const LOCALES = [ "en_US", "de_DE", "fr_FR", "es_ES", "it_IT", "nl_NL", "pt_PT", "ru_RU", "pl_PL", "sv_SE", "id_ID", "ja", "tr_TR" ];
 const fromFixture = name => {
 	const [ text, attributes ] = papers[ name ];
-	return { text, keyword: "", title: "", description: "", slug: "", h1Count: "", locale: "en_US", ...attributes };
+	return { text, keyword: "", title: "", description: "", slug: "", h1Count: "", productSchema: "", locale: "en_US", ...attributes };
 };
 
 /**
@@ -28,9 +28,13 @@ const fromFixture = name => {
  * @returns {Object} The score, the assessment results, the research outputs, or the error.
  */
 function analyze( input ) {
-	const { text, h1Count, ...attributes } = input;
+	const { text, h1Count, productSchema, ...attributes } = input;
 	try {
-		const paper = new Paper( text, { ...attributes, h1Count: h1Count === "" ? null : Number( h1Count ) } );
+		const paper = new Paper( text, {
+			...attributes,
+			h1Count: h1Count === "" ? null : Number( h1Count ),
+			productSchema: productSchema.trim() ? JSON.parse( productSchema ) : null,
+		} );
 		const researcher = new ( getResearcher( input.locale ) )( paper );
 
 		const researches = {};
@@ -89,6 +93,13 @@ function Playground() {
 								<TextField label="h1Count (H1s outside the text)" type="number" { ...field( "h1Count" ) } />
 							</InlineGrid>
 							<TextField label="Content (HTML)" multiline={ 14 } monospaced { ...field( "text" ) } />
+							<TextField
+								label="Product schema (JSON-LD Product object, optional)"
+								multiline={ 4 }
+								monospaced
+								placeholder='{ "name": "Red mug", "image": "…", "offers": { "price": "19", "priceCurrency": "EUR" } }'
+								{ ...field( "productSchema" ) }
+							/>
 						</BlockStack>
 					</Card>
 				</Layout.Section>

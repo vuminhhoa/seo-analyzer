@@ -27,11 +27,12 @@ export default class OutboundLinksAssessment extends Assessment {
       fixPosition: 'description',
       icon: ExternalIcon,
       title: 'External links',
-      priority: 'high',
+      priority: 'low',
       content: {
-        improve: '',
-        good: 'External links are used effectively.',
-        bad: 'No external links found. Add relevant links to be more authoritative and informative.'
+        improve:
+          'No external links found. Where it helps readers, link to trustworthy sources that back up your content.',
+        good: 'The text links to external sources.',
+        bad: ''
       }
     };
 
@@ -80,16 +81,8 @@ export default class OutboundLinksAssessment extends Assessment {
    * @returns {{score: number, body: React.JSX.Element, status: string}}
    */
   calculateResult(linkStatistics, i18n) {
-    let status = '';
-    if (linkStatistics.externalTotal === 0) {
-      status = 'bad';
-    } else if (linkStatistics.externalNofollow === linkStatistics.externalTotal) {
-      status = 'bad';
-    } else if (linkStatistics.externalDofollow < linkStatistics.externalTotal) {
-      status = 'good';
-    } else if (linkStatistics.externalDofollow === linkStatistics.externalTotal) {
-      status = 'good';
-    }
+    // Nofollow external links are fine: Google recommends them for sources you don't vouch for.
+    const status = linkStatistics.externalTotal > 0 ? 'good' : 'improve';
 
     const score = this.getScore(this._config.priority, status);
 
