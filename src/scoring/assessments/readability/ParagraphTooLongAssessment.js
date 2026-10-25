@@ -1,7 +1,6 @@
 import {merge} from 'lodash';
 import React from 'react';
 import {Text} from '@shopify/polaris';
-import {inRangeEndInclusive as inRange} from '../../helpers/assessments/inRange';
 import AssessmentResult from '../../../values/AssessmentResult';
 import Assessment from '../assessment';
 
@@ -21,20 +20,20 @@ export default class ParagraphTooLongAssessment extends Assessment {
 
     const defaultConfig = {
       id: 'textParagraphTooLong',
-      priority: 'high',
+      priority: 'medium',
       docUrl:
         'https://github.com/vuminhhoa/seo-analyzer/blob/main/docs/checklist.md#textparagraphtoolong',
       fixPosition: 'longParagraph',
       ctaType: 'fix',
       parameters: {
         recommendedLength: 150,
-        maximumRecommendedLength: 150
+        maximumRecommendedLength: 200
       },
       title: 'Paragraph length',
       content: {
-        bad: 'Paragraph too long. Keep paragraph length less than 150 words for readability.',
-        improve: '',
-        good: 'Paragraph is optimized, with less than 150 words.'
+        bad: 'A paragraph is very long (over 200 words). Split it so the text is easier to scan.',
+        improve: 'A paragraph is a bit long (over 150 words). Consider splitting it.',
+        good: 'Paragraphs are short enough to read easily (150 words or fewer).'
       }
     };
 
@@ -76,29 +75,14 @@ export default class ParagraphTooLongAssessment extends Assessment {
    * @returns {{score: number, body: React.JSX.Element, status: string}}
    */
   calculateResult({paragraphsLength, config, i18n}) {
-    let status = '';
-    if (paragraphsLength.length === 0) {
-      status = 'good';
-    }
+    const longestParagraphLength = paragraphsLength.length ? paragraphsLength[0].paragraphLength : 0;
+    const {recommendedLength, maximumRecommendedLength} = config.parameters;
 
-    const longestParagraphLength = paragraphsLength[0].paragraphLength;
-
-    if (longestParagraphLength <= config.parameters.recommendedLength) {
-      status = 'good';
-    }
-
-    if (
-      inRange(
-        longestParagraphLength,
-        config.parameters.recommendedLength,
-        config.parameters.maximumRecommendedLength
-      )
-    ) {
-      status = 'good';
-    }
-
-    if (longestParagraphLength > config.parameters.maximumRecommendedLength) {
+    let status = 'good';
+    if (longestParagraphLength > maximumRecommendedLength) {
       status = 'bad';
+    } else if (longestParagraphLength > recommendedLength) {
+      status = 'improve';
     }
 
     const score = this.getScore(this._config.priority, status);

@@ -25,7 +25,7 @@ export default class TextImagesAssessment extends Assessment {
       id: 'images',
       docUrl:
         'https://github.com/vuminhhoa/seo-analyzer/blob/main/docs/checklist.md#images',
-      priority: 'high',
+      priority: 'medium',
       fixPosition: 'description',
       title: 'Media',
       content: {

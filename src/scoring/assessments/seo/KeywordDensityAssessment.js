@@ -24,12 +24,18 @@ class KeyphraseDensityAssessment extends Assessment {
       docUrl:
         'https://github.com/vuminhhoa/seo-analyzer/blob/main/docs/checklist.md#keyphrasedensity',
       ctaType: 'fix',
-      priority: 'high',
+      priority: 'medium',
       title: 'Main keyword density',
+      // Google publishes no ideal density; the risk is keyword stuffing (a spam policy), so the
+      // upper bound matters most. Range follows the current Yoast SEO defaults.
+      parameters: {
+        minimum: 0.5,
+        maximum: 3
+      },
       content: {
-        good: 'Keyword density is optimized, between 1 - 1.5%.',
-        bad: 'Keep keyword density from 1% - 1.5%.',
-        improve: ''
+        good: 'Keyword density is within the recommended 0.5% - 3%.',
+        improve: 'The keyword appears rarely (under 0.5%). Use it a few more times where it reads naturally.',
+        bad: 'The keyword is overused (over 3%), which reads as keyword stuffing. Use synonyms or rephrase.'
       }
     };
 
@@ -72,12 +78,12 @@ class KeyphraseDensityAssessment extends Assessment {
    */
   calculateResult(paper, i18n) {
     const density = this._keyphraseDensity;
-    let status = '';
-    if (density < 1 || density > 1.5) {
+    const {minimum, maximum} = this._config.parameters;
+    let status = 'good';
+    if (density < minimum) {
+      status = 'improve';
+    } else if (density > maximum) {
       status = 'bad';
-    }
-    if (density >= 1 && density <= 1.5) {
-      status = 'good';
     }
     const score = this.getScore(this._config.priority, status);
 

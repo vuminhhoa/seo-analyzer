@@ -24,7 +24,7 @@ class SlugKeywordAssessment extends Assessment {
         'https://github.com/vuminhhoa/seo-analyzer/blob/main/docs/checklist.md#slugkeyword',
       fixPosition: 'url handle',
       ctaType: 'fix',
-      priority: 'medium',
+      priority: 'low',
       title: 'Keyword in URL',
       content: {
         good: 'Keyword is included in URL.',

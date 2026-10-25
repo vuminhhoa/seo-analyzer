@@ -25,7 +25,7 @@ class SentenceLengthInTextAssessment extends Assessment {
 
     const defaultConfig = {
       id: 'textSentenceLength',
-      priority: 'high',
+      priority: 'medium',
       docUrl:
         'https://github.com/vuminhhoa/seo-analyzer/blob/main/docs/checklist.md#textsentencelength',
       ctaType: 'fix',
@@ -35,11 +35,12 @@ class SentenceLengthInTextAssessment extends Assessment {
       slightlyTooMany: 25,
       farTooMany: 30,
       title: 'Text Sentence Length',
+      // `recommendedLength` is the word limit per sentence; `slightlyTooMany` and `farTooMany`
+      // are the share (%) of sentences over that limit. Defaults follow Yoast SEO.
       content: {
-        improve: '',
-        bad:
-          'Sentence too long. Keep sentence length less than 20 words to improve readability and flow.',
-        good: 'Sentence length is optimized for readability, less than 20 words.'
+        good: 'Most sentences are short enough to read easily.',
+        improve: 'Over {slightlyTooMany}% of sentences have more than {recommendedLength} words. Try splitting some of them.',
+        bad: 'Over {farTooMany}% of sentences have more than {recommendedLength} words. Split long sentences to make the text easier to read.'
       }
     };
 
@@ -128,29 +129,26 @@ class SentenceLengthInTextAssessment extends Assessment {
    * @returns {{score: number, body: React.JSX.Element, status: string}}
    */
   calculateResult(percentage, i18n) {
-    let status = '';
-    if (percentage <= this._config.recommendedLength) {
-      status = 'good';
-    }
-
-    if (percentage > this._config.recommendedLength) {
+    const {recommendedLength, slightlyTooMany, farTooMany} = this._config;
+    let status = 'good';
+    if (percentage > farTooMany) {
       status = 'bad';
+    } else if (percentage > slightlyTooMany) {
+      status = 'improve';
     }
 
     const score = this.getScore(this._config.priority, status);
-
-    this._config.content = {
-      improve: '',
-      bad: `Sentence too long. Keep sentence length less than ${this._config.recommendedLength} words to improve readability and flow.`,
-      good: `Sentence length is optimized for readability, less than ${this._config.recommendedLength} words.`
-    };
+    const message = this._config.content[status].replace(
+      /\{(recommendedLength|slightlyTooMany|farTooMany)\}/g,
+      (match, key) => ({recommendedLength, slightlyTooMany, farTooMany}[key])
+    );
 
     return {
       score,
       status,
       body: (
         <Text as={'span'}>
-          {this._config.content[status]}{' '}
+          {message}{' '}
           {this._config.docUrl && (
             <a href={this._config.docUrl} target="_blank" rel="noreferrer">
               {i18n ? i18n.translate(`SeoAnalyzer.Button.learnMore`) : 'Learn more'}

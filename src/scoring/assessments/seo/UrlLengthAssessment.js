@@ -20,7 +20,7 @@ export default class UrlLengthAssessment extends Assessment {
 
     const defaultConfig = {
       id: 'urlLength',
-      priority: 'high',
+      priority: 'low',
       docUrl:
         'https://github.com/vuminhhoa/seo-analyzer/blob/main/docs/checklist.md#urllength',
       fixPosition: 'url handle',
@@ -98,6 +98,6 @@ export default class UrlLengthAssessment extends Assessment {
    * @returns {boolean} Returns true if the language is available and the paper is not empty.
    */
   isApplicable(paper, researcher) {
-    return true;
+    return paper.hasSlug();
   }
 }

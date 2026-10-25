@@ -25,13 +25,14 @@ export default class NumberInMetaTitleAssessment extends Assessment {
       status: 'good',
       docUrl:
         'https://github.com/vuminhhoa/seo-analyzer/blob/main/docs/checklist.md#numbertitle',
-      priority: 'high',
+      priority: 'low',
       fixPosition: 'meta title',
       title: 'Number in meta title',
       content: {
-        good: 'Number is used effectively in the title tag.',
-        improve: '',
-        bad: 'No number found in title tag. Consider adding a number to make it more engaging.'
+        good: 'The title contains a number.',
+        improve:
+          'Optional: if it fits the page (a list, a year, a quantity), a number in the title can attract clicks.',
+        bad: ''
       }
     };
 
@@ -68,14 +69,7 @@ export default class NumberInMetaTitleAssessment extends Assessment {
   calculateResult(paper, i18n) {
     const title = paper.getTitle();
 
-    let status = '';
-    if (!/\d/.test(title)) {
-      status = 'bad';
-    }
-
-    if (!title || /\d/.test(title)) {
-      status = 'good';
-    }
+    const status = /\d/.test(title) ? 'good' : 'improve';
 
     const score = this.getScore(this._config.priority, status);
 
