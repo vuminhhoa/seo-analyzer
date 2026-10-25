@@ -58,7 +58,16 @@ Each assessment result has `id`, `title`, `status`, `score`, `priority` and a `b
 
 ### Languages
 
-Import the researcher for the paper's language from `build/languageProcessing/languages/<code>/Researcher`. Available codes:
+Use `getResearcher` to pick the researcher for a language code or locale. Unknown languages fall back to the default researcher:
+
+```js
+import getResearcher from "@vuminhhoa/seo-analyzer/build/languageProcessing/getResearcher";
+
+const Researcher = getResearcher( "en_US" ); // also accepts "en" or "en-US"
+const assessor = new CombinedAssessor( new Researcher( paper ) );
+```
+
+You can also import a researcher directly from `build/languageProcessing/languages/<code>/Researcher`. Available codes:
 
 `ar` `ca` `cs` `de` `el` `en` `es` `fa` `fr` `he` `hu` `id` `it` `ja` `nb` `nl` `pl` `pt` `ru` `sk` `sv` `tr`
 

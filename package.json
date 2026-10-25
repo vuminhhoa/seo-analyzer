@@ -43,8 +43,9 @@
     "build": "yarn clean && yarn build:js && yarn build:types",
     "build:js": "babel src --copy-files --source-maps --out-dir build",
     "build:types": "tsc",
+    "check:imports": "node scripts/check-imports.js",
     "clean": "rm -rf build types",
-    "lint": "eslint .",
+    "lint": "eslint . && yarn check:imports",
     "prepublishOnly": "yarn lint && yarn build"
   },
   "publishConfig": {

@@ -51,7 +51,7 @@ class KeyphraseDensityAssessment extends Assessment {
     this._keyphraseCount = researcher.getResearch('getKeyphraseCount');
     const keyphraseLength = this._keyphraseCount.keyphraseLength;
 
-    this._keyphraseDensity = researcher.getResearch('getKeyphraseDensity');
+    this._keyphraseDensity = researcher.getResearch('getKeyphraseDensity').density;
     this._keyphraseDensity = this._keyphraseDensity * keyphraseLengthFactor(keyphraseLength);
 
     const assessmentResult = new AssessmentResult({config: this._config});

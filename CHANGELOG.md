@@ -7,6 +7,17 @@ All notable changes to this project are documented here. The format follows [Kee
 ### Changed
 - Connected the repository to upstream `yoastseo` history (fork point `d30b500`) and added a monthly upstream sync workflow.
 - Restored 87 upstream files that differed only in formatting to their original form, and added a `yoastseo` import alias so they need no changes.
+- Synced with upstream `yoastseo` up to `afe80002` (2026-10-13). Researches now work on the parsed HTML tree, and the stemmers and function word lists are updated. Farsi multi-word function words are now split.
+- The `ParagraphTooLong`, `KeyphraseDensity` and `SubheadingsKeyword` assessments read the new research result shapes.
+
+### Added
+- `getResearcher( languageOrLocale )` in `languageProcessing/getResearcher`.
+- `Paper#getProvidedImages()` and `Paper#hasProvidedImages()`. With the `providedImages` attribute, the image researches assess only the images you pass in.
+- `yarn check:imports`, run as part of `yarn lint`, fails on imports that do not resolve.
+
+### Fixed
+- `SubheadingsKeyword` always failed because it read a property that does not exist (`match`).
+- `AssessorPresenter` imported a missing `config/presenter.js`.
 
 ## [0.1.0]
 
