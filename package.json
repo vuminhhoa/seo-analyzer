@@ -58,7 +58,7 @@
     "tokenizer2": "^2.0.1"
   },
   "peerDependencies": {
-    "@shopify/polaris": "^13.9.1",
+    "@shopify/polaris": "^13.9.5",
     "@shopify/polaris-icons": "^8.2.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -69,12 +69,12 @@
     "@babel/preset-env": "^7.29.7",
     "@babel/preset-react": "^7.28.5",
     "@eslint/js": "^9.39.1",
-    "@shopify/polaris": "^13.9.1",
+    "@shopify/polaris": "^13.9.5",
     "@shopify/polaris-icons": "^8.2.0",
     "@yoast/browserslist-config": "^1.2.5",
-    "babel-plugin-module-resolver": "^5.0.2",
+    "babel-plugin-module-resolver": "^5.0.3",
     "eslint": "^9.39.5",
-    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react": "^7.37.5",
     "globals": "^17.13.0",
     "prettier": "^1.18.2",
     "react": "18.3.1",
