@@ -1,0 +1,102 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`assessment results > basic article 1`] = `
+{
+  "results": {
+    "externalLinks": "good (100)",
+    "images": "good (100)",
+    "internalLinks": "good (100)",
+    "introductionKeyword": "good (50)",
+    "keyphrase": "good (100)",
+    "keyphraseDensity": "bad (0)",
+    "keyphraseLength": "good (50)",
+    "metaDescriptionKeyword": "good (100)",
+    "metaDescriptionLength": "improve (50)",
+    "numberTitle": "good (100)",
+    "sentenceBeginnings": "good (75)",
+    "singleH1": "good (100)",
+    "singleTitle": "bad (0)",
+    "slugKeyword": "good (75)",
+    "subheadingsKeyword": "good (75)",
+    "textImages": "good (100)",
+    "textLength": "bad (0)",
+    "textParagraphTooLong": "good (100)",
+    "textSentenceLength": "good (100)",
+    "titleKeyword": "good (100)",
+    "titleWidth": "bad (0)",
+    "urlLength": "good (100)",
+  },
+  "score": 78,
+}
+`;
+
+exports[`assessment results > empty paper 1`] = `
+{
+  "results": {
+    "keyphrase": "bad (0)",
+    "metaDescriptionLength": "bad (0)",
+    "textLength": "bad (0)",
+    "urlLength": "good (100)",
+  },
+  "score": 25,
+}
+`;
+
+exports[`assessment results > german text 1`] = `
+{
+  "results": {
+    "externalLinks": "bad (0)",
+    "images": "bad (0)",
+    "internalLinks": "bad (0)",
+    "introductionKeyword": "good (50)",
+    "keyphrase": "good (100)",
+    "keyphraseDensity": "bad (0)",
+    "keyphraseLength": "good (50)",
+    "metaDescriptionLength": "bad (0)",
+    "numberTitle": "bad (0)",
+    "sentenceBeginnings": "good (75)",
+    "singleH1": "bad (0)",
+    "singleTitle": "bad (0)",
+    "subheadingsKeyword": "bad (0)",
+    "textLength": "bad (0)",
+    "textParagraphTooLong": "good (100)",
+    "textSentenceLength": "good (100)",
+    "titleKeyword": "good (100)",
+    "titleWidth": "bad (0)",
+    "urlLength": "good (100)",
+  },
+  "score": 39,
+}
+`;
+
+exports[`assessment results > long article 1`] = `
+{
+  "results": {
+    "externalLinks": "bad (0)",
+    "images": "good (100)",
+    "internalLinks": "good (100)",
+    "introductionKeyword": "bad (0)",
+    "keyphrase": "good (100)",
+    "keyphraseDensity": "bad (0)",
+    "keyphraseLength": "good (50)",
+    "metaDescriptionKeyword": "good (100)",
+    "metaDescriptionLength": "improve (50)",
+    "numberTitle": "bad (0)",
+    "relatedKeywords": "bad (0)",
+    "sentenceBeginnings": "bad (0)",
+    "singleH1": "good (100)",
+    "singleTitle": "bad (0)",
+    "slugKeyword": "good (75)",
+    "subheadingsKeyword": "good (75)",
+    "textImages": "bad (0)",
+    "textLength": "bad (0)",
+    "textParagraphTooLong": "bad (0)",
+    "textSentenceLength": "good (100)",
+    "textTransitionWords": "bad (0)",
+    "titleKeyword": "good (100)",
+    "titleWidth": "bad (0)",
+    "urlLength": "good (100)",
+  },
+  "score": 48,
+}
+`;

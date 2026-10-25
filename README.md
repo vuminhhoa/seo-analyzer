@@ -24,7 +24,7 @@ npm install @vuminhhoa/seo-analyzer
 yarn add @vuminhhoa/seo-analyzer
 ```
 
-Peer dependencies: `react@^18`, `react-dom@^18`, `@shopify/polaris@^13` and `@shopify/polaris-icons@^8`.
+Peer dependencies: `react@^18`, `react-dom@^18`, `@shopify/polaris@^13` and `@shopify/polaris-icons@^9`. Note that Shopify has deprecated Polaris React in favour of Polaris web components; see [Roadmap](#roadmap).
 
 The package ships Babel-compiled CommonJS in `build/` and imports one `.scss` file, so your bundler needs a Sass loader (webpack `sass-loader`, or Vite's built-in Sass support with `sass` installed). It runs in the browser and uses `DOMParser`.
 
@@ -51,6 +51,8 @@ const { score, assessments } = assessor.getResult( "status" );
 ```
 
 Each assessment result has `id`, `title`, `status`, `score`, `priority` and a `body` (a React node you can render directly).
+
+If your page template renders H1s outside the analyzed text (for example a theme that prints the product title as `<h1>`), pass their number as `h1Count`. The H1 check adds them to the H1s in the text and expects exactly one in total.
 
 - `getResult( "category" )` groups results into technical SEO and content SEO.
 - `getResult( groupBy, false )` leaves out the score.
@@ -104,11 +106,18 @@ Pass `ignoredAssessments` or `skippedAssessments` (arrays of assessment ids) as 
 
 ```bash
 yarn install
-yarn lint     # ESLint
+yarn dev      # playground with hot reload: http://localhost:5173
+yarn lint     # ESLint + import check (unresolved files, undeclared packages, Node built-ins)
+yarn test     # Vitest: unit tests + regression snapshots (yarn test -u to accept intended changes)
 yarn build    # Babel -> build/, TypeScript declarations -> types/
 ```
 
 To try local changes in another project, run `yarn link` here, then `yarn link @vuminhhoa/seo-analyzer` in that project.
+
+## Roadmap
+
+- **UI-agnostic results.** Shopify has [deprecated Polaris React](https://www.npmjs.com/package/@shopify/polaris) in favour of Polaris web components. The plan is to return plain data (status, message, link) from assessments and move the Polaris rendering into an optional layer.
+- **Smaller bundles.** The CommonJS build pulls in every language (about 1 MB gzipped). An ES module build with per-language entry points would let bundlers drop the languages you don't use.
 
 ## Contributing
 
