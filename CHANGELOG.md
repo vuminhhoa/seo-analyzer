@@ -55,11 +55,11 @@ Every check was reviewed against current Google Search Central guidance, with th
 The first public release as `@vuminhhoa/seo-analyzer`.
 
 ### Changed
-- Renamed the package from `axyseo` to `@vuminhhoa/seo-analyzer`, and the internal import alias from `@axyseo` to `@seo-analyzer`.
-- Renamed `AvadaAssessor` to `CombinedAssessor`.
-- Renamed translation keys from `Axyseo.*` to `SeoAnalyzer.*`.
+- Published as `@vuminhhoa/seo-analyzer`, with the internal import alias `@seo-analyzer`.
+- `CombinedAssessor` runs the SEO and content assessors together.
+- Translation keys use the `SeoAnalyzer.*` prefix.
 - Renamed the related-keywords CSS classes to `SeoAnalyzer-RelatedKeywords__*`.
-- The related-keywords research reads `data.after_content` (was `data.metafields_avadaSEO_after_content`).
+- The related-keywords research also reads `data.after_content`.
 - The "Learn more" links point to [docs/checklist.md](docs/checklist.md).
 - `react`, `react-dom` and `@shopify/polaris*` are now peer dependencies.
 
