@@ -17,7 +17,19 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ### Fixed
 - `SubheadingsKeyword` always failed because it read a property that does not exist (`match`).
-- `AssessorPresenter` imported a missing `config/presenter.js`.
+- The overall score was `NaN` when `h1Count` was not passed. The H1 check now adds `h1Count` (H1s rendered outside the text, default 0) to the `<h1>` tags in the text, and expects exactly one in total. **Behaviour change:** `h1Count: 0` with no H1 in the text is now `bad` (it was `good`), and `h1Count: 1` together with an H1 in the text is now `improve` (it was `good`).
+- `UrlLength` never set its score, so a short URL counted as 0 points. Overall scores go up for every page.
+- The internal and external link checks were silently dropped in browser bundles without Node polyfills (Vite, for example). `url` and `events` are now dependencies.
+
+### Changed
+- `@shopify/polaris-icons` peer range is now `^9.3.1`, the version `@shopify/polaris` 13.9.5 itself depends on.
+
+### Removed
+- Unused, WordPress-only code that imported the undeclared `@wordpress/i18n`: `parsedPaper/assess/`, `scoring/renderers/AssessorPresenter.js` and `config/presenter.js`.
+
+### Development
+- Added a Vitest suite (`yarn test`) with regression snapshots, and run it in CI.
+- `yarn check:imports` now also fails on undeclared packages and on Node built-ins without a browser polyfill.
 
 ## [0.1.0]
 

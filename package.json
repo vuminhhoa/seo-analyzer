@@ -46,21 +46,25 @@
     "check:imports": "node scripts/check-imports.js",
     "clean": "rm -rf build types",
     "lint": "eslint . && yarn check:imports",
-    "prepublishOnly": "yarn lint && yarn build"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "yarn lint && yarn test && yarn build"
   },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
+    "events": "^3.3.0",
     "htmlparser2": "^3.9.2",
     "lodash": "^4.18.1",
     "parse5": "^7.3.0",
     "tiny-segmenter": "^0.2.0",
-    "tokenizer2": "^2.0.1"
+    "tokenizer2": "^2.0.1",
+    "url": "^0.11.4"
   },
   "peerDependencies": {
     "@shopify/polaris": "^13.9.5",
-    "@shopify/polaris-icons": "^8.2.0",
+    "@shopify/polaris-icons": "^9.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -71,16 +75,19 @@
     "@babel/preset-react": "^7.28.5",
     "@eslint/js": "^9.39.1",
     "@shopify/polaris": "^13.9.5",
-    "@shopify/polaris-icons": "^8.2.0",
+    "@shopify/polaris-icons": "^9.3.1",
     "@yoast/browserslist-config": "^1.2.5",
     "babel-plugin-module-resolver": "^5.0.3",
     "eslint": "^9.39.5",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^17.13.0",
+    "jsdom": "25.0.1",
     "prettier": "^3.9.10",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "typescript": "^5.6.3"
+    "sass": "1.80.6",
+    "typescript": "^5.6.3",
+    "vitest": "2.1.4"
   },
   "resolutions": {
     "lodash": "^4.18.1"

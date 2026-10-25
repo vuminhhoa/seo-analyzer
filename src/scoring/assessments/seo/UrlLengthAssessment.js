@@ -82,7 +82,7 @@ export default class UrlLengthAssessment extends Assessment {
     const calculatedResult = this.calculateResult(paper, i18n);
     const assessmentResult = new AssessmentResult({config: this._config});
 
-    assessmentResult.setStatus(calculatedResult.status);
+    assessmentResult.setScore(calculatedResult.score);
     assessmentResult.setStatus(calculatedResult.status);
     assessmentResult.setBody(calculatedResult.body);
 

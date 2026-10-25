@@ -7,8 +7,8 @@ import Assessment from '../assessment.js';
 import AssessmentResult from '../../../values/AssessmentResult.js';
 
 /**
- * Assessment to check whether the body of the text contains more than 1 H1s in the body.
- * This assessment doesn't penalize H1 that is not in the very beginning of the body.
+ * Assessment to check whether the page has exactly one H1, counting the H1s in the text
+ * and the ones the page renders outside of it (the `h1Count` paper attribute).
  */
 class SingleH1Assessment extends Assessment {
   /**
@@ -67,22 +67,19 @@ class SingleH1Assessment extends Assessment {
   /**
    * Returns the score and the feedback string for the single H1 assessment.
    *
+   * The page's H1 total is the `h1Count` paper attribute (H1s rendered outside the text, e.g. by
+   * a theme; defaults to 0) plus the H1 tags in the text itself. Exactly one H1 is good.
+   *
    * @returns {Object|null} The calculated score and the feedback string.
    */
   calculateResult(paper, i18n) {
-    const htmlString = paper.getText();
-    const desHasH1Tag = htmlString.includes('<h1>');
+    const h1sInText = (paper.getText().match(/<h1[\s>]/gi) || []).length;
+    const totalH1s = (this._h1Count || 0) + h1sInText;
 
-    let status = '';
-    if (this._h1Count === 1) {
+    let status = 'bad';
+    if (totalH1s === 1) {
       status = 'good';
-    }
-
-    if (this._h1Count === 0 && !desHasH1Tag) {
-      status = 'good';
-    }
-
-    if (this._h1Count > 1) {
+    } else if (totalH1s > 1) {
       status = 'improve';
     }
 
