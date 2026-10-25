@@ -1,7 +1,7 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {getWords} = languageProcessing;
+import { languageProcessing } from "yoastseo";
+const { getWords } = languageProcessing;
 
-import participlesInReAndRa from '../../config/internal/participles.js';
+import participlesInReAndRa from "../../config/internal/participles.js";
 
 /**
  * Creates an array of participles found in a clause.
@@ -10,12 +10,10 @@ import participlesInReAndRa from '../../config/internal/participles.js';
  *
  * @returns {Array} The array with the participles.
  */
-export default function(clauseText) {
-  const words = getWords(clauseText);
+export default function( clauseText ) {
+	const words = getWords( clauseText );
 
-  const participleEndingsRegex = new RegExp('(ve|va|ódni|ődni)$');
+	const participleEndingsRegex = new RegExp( "(ve|va|ódni|ődni)$" );
 
-  return words.filter(
-    word => participleEndingsRegex.test(word) || participlesInReAndRa.includes(word)
-  );
+	return words.filter( word => participleEndingsRegex.test( word ) || participlesInReAndRa.includes( word ) );
 }

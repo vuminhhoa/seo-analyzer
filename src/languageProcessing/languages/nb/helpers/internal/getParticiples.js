@@ -1,8 +1,8 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {getWords} = languageProcessing;
+import { languageProcessing } from "yoastseo";
+const { getWords } = languageProcessing;
 
-import participles from '../../config/internal/participles.js';
-import {forEach, includes} from 'lodash';
+import participles from "../../config/internal/participles.js";
+import { forEach, includes } from "lodash";
 
 /**
  * Creates an array of participles found in a clause.
@@ -11,14 +11,14 @@ import {forEach, includes} from 'lodash';
  *
  * @returns {Array} The array with the participles.
  */
-export default function(clauseText) {
-  const words = getWords(clauseText);
-  const foundParticiples = [];
+export default function( clauseText ) {
+	const words = getWords( clauseText );
+	const foundParticiples = [];
 
-  forEach(words, function(word) {
-    if (includes(participles, word)) {
-      foundParticiples.push(word);
-    }
-  });
-  return foundParticiples;
+	forEach( words, function( word ) {
+		if ( includes( participles, word ) ) {
+			foundParticiples.push( word );
+		}
+	} );
+	return foundParticiples;
 }

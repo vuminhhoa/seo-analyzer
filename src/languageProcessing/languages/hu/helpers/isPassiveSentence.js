@@ -1,12 +1,8 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {getWords} = languageProcessing;
+import { languageProcessing } from "yoastseo";
+const { getWords } = languageProcessing;
 
-import passiveVerbs from '../config/internal/odikVerbs';
-import {
-  verbPrefixes,
-  odikSuffixes1,
-  odikSuffixes2
-} from '../config/internal/morphologicalPassiveAffixes';
+import passiveVerbs from "../config/internal/odikVerbs";
+import { verbPrefixes, odikSuffixes1, odikSuffixes2 } from "../config/internal/morphologicalPassiveAffixes";
 
 /**
  * Checks if the input word's root is in the Hungarian verb roots list.
@@ -18,20 +14,20 @@ import {
  *
  * @returns {Boolean}               Returns true if the root of the input word is in the list.
  */
-const checkHungarianPassive = function(word, verbRootsList, prefixes, suffixes) {
-  return verbRootsList.some(root => {
-    return suffixes.some(function(suffix) {
-      const rootAndSuffix = root + suffix;
+const checkHungarianPassive = function( word, verbRootsList, prefixes, suffixes ) {
+	return verbRootsList.some( root => {
+		return suffixes.some( function( suffix ) {
+			const rootAndSuffix = root + suffix;
 
-      // Check whether the word ends in a root + suffix combination.
-      if (word.endsWith(rootAndSuffix)) {
-        const beforeRoot = word.slice(0, word.indexOf(rootAndSuffix));
+			// Check whether the word ends in a root + suffix combination.
+			if ( word.endsWith( rootAndSuffix ) ) {
+				const beforeRoot = word.slice( 0, word.indexOf( rootAndSuffix ) );
 
-        // Word is passive if nothing precedes the root or the root is preceded by a valid prefix.
-        return beforeRoot === '' || prefixes.includes(beforeRoot);
-      }
-    });
-  });
+				// Word is passive if nothing precedes the root or the root is preceded by a valid prefix.
+				return beforeRoot === "" || prefixes.includes( beforeRoot );
+			}
+		} );
+	} );
 };
 
 /**
@@ -41,14 +37,11 @@ const checkHungarianPassive = function(word, verbRootsList, prefixes, suffixes) 
  *
  * @returns {Boolean}           Whether the sentence contains Hungarian passive voice.
  */
-export default function isPassiveSentence(sentence) {
-  const words = getWords(sentence);
-  const passiveVerbs1 = passiveVerbs.odikVerbStems1;
-  const passiveVerbs2 = passiveVerbs.odikVerbStems2;
+export default function isPassiveSentence( sentence ) {
+	const words = getWords( sentence );
+	const passiveVerbs1 = passiveVerbs.odikVerbStems1;
+	const passiveVerbs2 = passiveVerbs.odikVerbStems2;
 
-  return words.some(
-    word =>
-      checkHungarianPassive(word, passiveVerbs1, verbPrefixes, odikSuffixes1) ||
-      checkHungarianPassive(word, passiveVerbs2, verbPrefixes, odikSuffixes2)
-  );
+	return words.some( word => checkHungarianPassive( word, passiveVerbs1, verbPrefixes, odikSuffixes1 ) ||
+		checkHungarianPassive( word, passiveVerbs2, verbPrefixes, odikSuffixes2 ) );
 }

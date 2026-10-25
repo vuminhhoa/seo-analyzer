@@ -1,7 +1,7 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-import {countSyllablesInWord} from '../../../../helpers/syllables/countSyllables';
-import syllables from '../../config/syllables.json';
-const {buildFormRule, createRulesFromArrays} = languageProcessing;
+import { languageProcessing } from "yoastseo";
+import { countSyllablesInWord } from "../../../../helpers/syllables/countSyllables";
+import syllables from "../../config/syllables.json";
+const { buildFormRule, createRulesFromArrays } = languageProcessing;
 
 /**
  * Further checks if the word can be a specific adjectival form.
@@ -13,39 +13,38 @@ const {buildFormRule, createRulesFromArrays} = languageProcessing;
  *
  * @returns {boolean} Whether the word can be a specific adjectival form.
  */
-const refineAdjectiveCheck = (word, endsWith, nonStemmingExceptions, forcedStemmingExceptions) => {
-  const countSyllables = countSyllablesInWord(word, syllables);
-  /*
-   * This check is based on the regular comparative and superlative formation rules.
-   * One syllable adjectives receive -er and -est. The syllable count of the comparative/superlative form is 2.
-   * One/two syllable adjectives ending in -e receive -r and -st. The syllable count of the comparative/superlative form is 2.
-   * Two syllable adjectives ending in -y receive -ier and -iest. The syllable count of the comparative/superlative form is 3.
-   * Words ending in -er/-est that don't follow the above rules are not comparatives/superlatives, unless listed in the exception lists.
-   */
-  if (word.endsWith(endsWith)) {
-    // Words with one syllable or less can't be comparatives/superlatives.
-    if (countSyllables <= 1) {
-      return false;
-    }
-    // The suffix for adjectives ending in -y is -ier/-iest.
-    const adjectiveEndingInYSuffix = `i${endsWith}`;
-    // Checks if the word is an adjective ending in -y that can have suffixes -er/-est. For example, 'pretty'.
-    const isStemEndingInY = word.endsWith(adjectiveEndingInYSuffix);
-    // Checks if the word is an adjective longer than one syllable that can have suffixes -er/-est (e.g. 'shallow'), OR
-    // if the word is an adjective ending in -y containing more than two syllables that can have suffixes -ier/-iest (e.g. 'unlikely').
-    const isForcedStemmingException =
-      forcedStemmingExceptions.includes(word.slice(0, -adjectiveEndingInYSuffix.length)) ||
-      forcedStemmingExceptions.includes(word.slice(0, -endsWith.length));
-    // Check if the word ending in -er/-est is not a comparative/superlative (e.g. 'banner').
-    const isNonStemmingException = nonStemmingExceptions.includes(word);
-    // The maximum syllable count for a word to be a comparative/superlative is 2, unless it ends in -y, then it's 3.
-    const maxSyllables = isStemEndingInY ? 3 : 2;
+const refineAdjectiveCheck = ( word, endsWith, nonStemmingExceptions, forcedStemmingExceptions ) => {
+	const countSyllables = countSyllablesInWord( word, syllables );
+	/*
+	 * This check is based on the regular comparative and superlative formation rules.
+	 * One syllable adjectives receive -er and -est. The syllable count of the comparative/superlative form is 2.
+	 * One/two syllable adjectives ending in -e receive -r and -st. The syllable count of the comparative/superlative form is 2.
+	 * Two syllable adjectives ending in -y receive -ier and -iest. The syllable count of the comparative/superlative form is 3.
+	 * Words ending in -er/-est that don't follow the above rules are not comparatives/superlatives, unless listed in the exception lists.
+	 */
+	if ( word.endsWith( endsWith ) ) {
+		// Words with one syllable or less can't be comparatives/superlatives.
+		if ( countSyllables <= 1 ) {
+			return false;
+		}
+		// The suffix for adjectives ending in -y is -ier/-iest.
+		const adjectiveEndingInYSuffix = `i${ endsWith }`;
+		// Checks if the word is an adjective ending in -y that can have suffixes -er/-est. For example, 'pretty'.
+		const isStemEndingInY = word.endsWith( adjectiveEndingInYSuffix );
+		// Checks if the word is an adjective longer than one syllable that can have suffixes -er/-est (e.g. 'shallow'), OR
+		// if the word is an adjective ending in -y containing more than two syllables that can have suffixes -ier/-iest (e.g. 'unlikely').
+		const isForcedStemmingException = forcedStemmingExceptions.includes( word.slice( 0, -adjectiveEndingInYSuffix.length ) ) ||
+			forcedStemmingExceptions.includes( word.slice( 0, -endsWith.length ) );
+		// Check if the word ending in -er/-est is not a comparative/superlative (e.g. 'banner').
+		const isNonStemmingException = nonStemmingExceptions.includes( word );
+		// The maximum syllable count for a word to be a comparative/superlative is 2, unless it ends in -y, then it's 3.
+		const maxSyllables = isStemEndingInY ? 3 : 2;
 
-    if (isForcedStemmingException || (countSyllables <= maxSyllables && !isNonStemmingException)) {
-      return true;
-    }
-  }
-  return false;
+		if ( isForcedStemmingException || ( countSyllables <= maxSyllables && ! isNonStemmingException ) ) {
+			return true;
+		}
+	}
+	return false;
 };
 
 /**
@@ -56,8 +55,7 @@ const refineAdjectiveCheck = (word, endsWith, nonStemmingExceptions, forcedStemm
  * @param {string[]} nonStemmingExceptions 	The list of words ending with the form that are not this form.
  * @returns {boolean} Whether the word ends with the form and is not in the exceptions list.
  */
-const endsWithAndNoException = (word, endsWith, nonStemmingExceptions) =>
-  word.endsWith(endsWith) && !nonStemmingExceptions.includes(word);
+const endsWithAndNoException = ( word, endsWith, nonStemmingExceptions ) => word.endsWith( endsWith ) && ! nonStemmingExceptions.includes( word );
 
 /**
  * Constructs a function that checks if the input word can be a specific adjectival form.
@@ -71,20 +69,20 @@ const endsWithAndNoException = (word, endsWith, nonStemmingExceptions) =>
  * @returns {Function} A function that checks if the input word can be a specific adjectival form.
  */
 const constructCanBeFunction = function(
-  endsWith,
-  minimumWordLength,
-  nonStemmingExceptions = [],
-  forcedStemmingExceptions = [],
-  checkFunction = endsWithAndNoException
+	endsWith,
+	minimumWordLength,
+	nonStemmingExceptions = [],
+	forcedStemmingExceptions = [],
+	checkFunction = endsWithAndNoException
 ) {
-  return word => {
-    const wordLength = word.length;
+	return word => {
+		const wordLength = word.length;
 
-    if (wordLength < minimumWordLength) {
-      return false;
-    }
-    return checkFunction(word, endsWith, nonStemmingExceptions, forcedStemmingExceptions);
-  };
+		if ( wordLength < minimumWordLength ) {
+			return false;
+		}
+		return checkFunction( word, endsWith, nonStemmingExceptions, forcedStemmingExceptions );
+	};
 };
 
 /**
@@ -103,60 +101,48 @@ const constructCanBeFunction = function(
  *
  * @returns {Object} The base form of the input word.
  */
-export default function(word, regexAdjective, stopAdjectives, multiSyllableAdjWithSuffixes) {
-  /*
-   * Check comparatives: Consider only words of four letters or more (otherwise, words like "per" are being treated
-   * as comparatives).
-   */
-  const canBeComparative = constructCanBeFunction(
-    'er',
-    4,
-    stopAdjectives.erExceptions,
-    multiSyllableAdjWithSuffixes,
-    refineAdjectiveCheck
-  );
-  if (canBeComparative(word)) {
-    const comparativeToBaseRegex = createRulesFromArrays(regexAdjective.comparativeToBase);
-    return {
-      base: buildFormRule(word, comparativeToBaseRegex) || word,
-      guessedForm: 'er'
-    };
-  }
+export default function( word, regexAdjective, stopAdjectives, multiSyllableAdjWithSuffixes ) {
+	/*
+	 * Check comparatives: Consider only words of four letters or more (otherwise, words like "per" are being treated
+	 * as comparatives).
+	 */
+	const canBeComparative = constructCanBeFunction( "er", 4, stopAdjectives.erExceptions, multiSyllableAdjWithSuffixes, refineAdjectiveCheck );
+	if ( canBeComparative( word ) ) {
+		const comparativeToBaseRegex = createRulesFromArrays( regexAdjective.comparativeToBase );
+		return {
+			base: buildFormRule( word, comparativeToBaseRegex ) || word,
+			guessedForm: "er",
+		};
+	}
 
-  /*
-   * Check superlatives: Consider only words of five letters or more (otherwise, words like "test" are being treated
-   * as superlatives).
-   */
-  const canBeSuperlative = constructCanBeFunction(
-    'est',
-    5,
-    stopAdjectives.estExceptions,
-    multiSyllableAdjWithSuffixes,
-    refineAdjectiveCheck
-  );
-  if (canBeSuperlative(word)) {
-    const superlativeToBaseRegex = createRulesFromArrays(regexAdjective.superlativeToBase);
-    return {
-      base: buildFormRule(word, superlativeToBaseRegex) || word,
-      guessedForm: 'est'
-    };
-  }
+	/*
+	 * Check superlatives: Consider only words of five letters or more (otherwise, words like "test" are being treated
+	 * as superlatives).
+	 */
+	const canBeSuperlative = constructCanBeFunction( "est", 5, stopAdjectives.estExceptions, multiSyllableAdjWithSuffixes, refineAdjectiveCheck );
+	if ( canBeSuperlative( word ) ) {
+		const superlativeToBaseRegex = createRulesFromArrays( regexAdjective.superlativeToBase );
+		return {
+			base: buildFormRule( word, superlativeToBaseRegex ) || word,
+			guessedForm: "est",
+		};
+	}
 
-  /*
-   * Check ly-adverbs: Consider only words of five letters or more (otherwise, words like "lily" are being treated
-   * as ly-adverbs).
-   */
-  const canBeLyAdverb = constructCanBeFunction('ly', 5, stopAdjectives.lyExceptions);
-  if (canBeLyAdverb(word)) {
-    const adverbToBaseRegex = createRulesFromArrays(regexAdjective.adverbToBase);
-    return {
-      base: buildFormRule(word, adverbToBaseRegex),
-      guessedForm: 'ly'
-    };
-  }
+	/*
+	 * Check ly-adverbs: Consider only words of five letters or more (otherwise, words like "lily" are being treated
+	 * as ly-adverbs).
+	 */
+	const canBeLyAdverb = constructCanBeFunction( "ly", 5, stopAdjectives.lyExceptions );
+	if ( canBeLyAdverb( word ) ) {
+		const adverbToBaseRegex = createRulesFromArrays( regexAdjective.adverbToBase );
+		return {
+			base: buildFormRule( word, adverbToBaseRegex ),
+			guessedForm: "ly",
+		};
+	}
 
-  return {
-    base: word,
-    guessedForm: 'base'
-  };
+	return {
+		base: word,
+		guessedForm: "base",
+	};
 }

@@ -1,7 +1,7 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {buildFormRule, createRulesFromArrays} = languageProcessing;
+import { languageProcessing } from "yoastseo";
+const { buildFormRule, createRulesFromArrays } = languageProcessing;
 
-const vowelCharacters = ['a', 'e', 'i', 'o', 'u'];
+const vowelCharacters = [ "a", "e", "i", "o", "u" ];
 
 /**
  * Determines if an input character is a vowel.
@@ -10,8 +10,8 @@ const vowelCharacters = ['a', 'e', 'i', 'o', 'u'];
  *
  * @returns {boolean} Whether the input character is an Indonesian vowel.
  */
-function isVowel(character) {
-  return vowelCharacters.includes(character);
+function isVowel( character ) {
+	return vowelCharacters.includes( character );
 }
 
 /**
@@ -21,16 +21,16 @@ function isVowel(character) {
  *
  * @returns {int} The total number of syllables in the word.
  */
-export function calculateTotalNumberOfSyllables(word) {
-  let result = 0;
+export function calculateTotalNumberOfSyllables( word ) {
+	let result = 0;
 
-  for (let i = 0; i < word.length; i++) {
-    if (isVowel(word[i])) {
-      result++;
-    }
-  }
+	for ( let i = 0; i < word.length; i++ ) {
+		if ( isVowel( word[ i ] ) ) {
+			result++;
+		}
+	}
 
-  return result;
+	return result;
 }
 
 /**
@@ -43,24 +43,24 @@ export function calculateTotalNumberOfSyllables(word) {
  *
  * @returns {string} The stemmed word.
  */
-export function removeEnding(word, regexRules, exceptions, morphologyData) {
-  if (exceptions.includes(word)) {
-    return word;
-  }
+export function removeEnding( word, regexRules, exceptions, morphologyData ) {
+	if ( exceptions.includes( word ) ) {
+		return word;
+	}
 
-  // Check words ending in -kan whether they are words whose stem ending in -k that get suffix -an or not.
-  const wordsWithKEnding = morphologyData.stemming.doNotStemWords.doNotStemK;
-  if (word.endsWith('kan')) {
-    const wordWithoutSuffixAn = word.substring(0, word.length - 2);
-    // If a word has stem ending -k and gets suffix -an, then only stem -an here.
-    if (wordsWithKEnding.includes(wordWithoutSuffixAn)) {
-      word = wordWithoutSuffixAn;
-    }
-  }
+	// Check words ending in -kan whether they are words whose stem ending in -k that get suffix -an or not.
+	const wordsWithKEnding = morphologyData.stemming.doNotStemWords.doNotStemK;
+	if ( word.endsWith( "kan" ) ) {
+		const wordWithoutSuffixAn = word.substring( 0, word.length - 2 );
+		// If a word has stem ending -k and gets suffix -an, then only stem -an here.
+		if ( wordsWithKEnding.includes( wordWithoutSuffixAn ) ) {
+			word = wordWithoutSuffixAn;
+		}
+	}
 
-  const removePartRegex = createRulesFromArrays(regexRules);
-  const withRemovedPart = buildFormRule(word, removePartRegex);
-  return withRemovedPart || word;
+	const removePartRegex = createRulesFromArrays( regexRules );
+	const withRemovedPart = buildFormRule( word, removePartRegex );
+	return withRemovedPart || word;
 }
 
 /**
@@ -72,7 +72,7 @@ export function removeEnding(word, regexRules, exceptions, morphologyData) {
  *
  * @returns {boolean} Whether the word is found in the list with beginnings.
  */
-export function checkBeginningsList(word, prefixLength, beginnings) {
-  const wordWithoutPrefix = word.slice(prefixLength);
-  return beginnings.some(beginning => wordWithoutPrefix.startsWith(beginning));
+export function checkBeginningsList( word, prefixLength, beginnings ) {
+	const wordWithoutPrefix = word.slice( prefixLength );
+	return beginnings.some( beginning => wordWithoutPrefix.startsWith( beginning ) );
 }

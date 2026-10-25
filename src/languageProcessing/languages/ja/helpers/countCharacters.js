@@ -1,6 +1,6 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {sanitizeString} = languageProcessing;
-import removeURLs from '../../../helpers/sanitize/removeURLs.js';
+import { languageProcessing } from "yoastseo";
+const { sanitizeString } = languageProcessing;
+import removeURLs from "../../../helpers/sanitize/removeURLs.js";
 
 /**
  * Calculates the character count which serves as a measure of text length.
@@ -10,10 +10,10 @@ import removeURLs from '../../../helpers/sanitize/removeURLs.js';
  *
  * @returns {number} The character count of the given text.
  */
-export default function(text) {
-  text = removeURLs(text);
-  text = sanitizeString(text);
-  text = text.replace(/\s/g, '');
+export default function( text ) {
+	text = removeURLs( text );
+	text = sanitizeString( text );
+	text = text.replace( /\s/g, "" );
 
-  return text.length;
+	return text.length;
 }

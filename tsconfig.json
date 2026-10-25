@@ -11,7 +11,8 @@
     "outDir": "./types",
     "module": "es2022",
     "paths": {
-      "@seo-analyzer/*": ["src/*"]
+      "@seo-analyzer/*": ["src/*"],
+      "yoastseo": ["src/index.js"]
     },
     "strict": true,
     "skipLibCheck": true,

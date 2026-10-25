@@ -1,0 +1,41 @@
+name: Upstream sync
+
+# Monthly: refresh the `upstream` branch from Yoast and open a PR to merge it.
+# Conflicts are resolved locally on the PR branch (see CONTRIBUTING.md).
+
+on:
+  schedule:
+    - cron: "0 3 1 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: upstream-sync
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - run: pip install git-filter-repo
+      - run: git fetch origin upstream:upstream || true
+      - run: scripts/sync-upstream.sh
+      - name: Push upstream branch and open PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git push origin upstream
+          if git merge-base --is-ancestor upstream origin/main; then
+            echo "main already contains upstream; nothing to do."
+            exit 0
+          fi
+          if [ -z "$(gh pr list --head upstream --base main --json number -q '.[].number')" ]; then
+            gh pr create --head upstream --base main \
+              --title "Sync with upstream yoastseo ($(git log -1 --format=%h upstream))" \
+              --body "Automated monthly sync of \`packages/yoastseo/src\` from Yoast/wordpress-seo. Merge with a **merge commit** (not squash) to keep the upstream link. Resolve conflicts on a local branch, see CONTRIBUTING.md."
+          fi

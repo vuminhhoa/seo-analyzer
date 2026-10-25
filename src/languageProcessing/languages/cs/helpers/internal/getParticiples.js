@@ -1,6 +1,6 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {getWords} = languageProcessing;
-import getPassiveEndingsCzech from '../../config/internal/passiveVoiceEndings';
+import { languageProcessing } from "yoastseo";
+const { getWords } = languageProcessing;
+import getPassiveEndingsCzech from "../../config/internal/passiveVoiceEndings";
 
 /**
  * Creates an array of participles found in a clause.
@@ -9,8 +9,8 @@ import getPassiveEndingsCzech from '../../config/internal/passiveVoiceEndings';
  *
  * @returns {Array} The list with participles found.
  */
-export default function(clauseText) {
-  const words = getWords(clauseText);
+export default function( clauseText ) {
+	const words = getWords( clauseText );
 
-  return words.filter(word => getPassiveEndingsCzech.some(ending => word.endsWith(ending)));
+	return words.filter( word => getPassiveEndingsCzech.some( ending => word.endsWith( ending ) ) );
 }

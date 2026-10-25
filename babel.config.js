@@ -5,7 +5,9 @@ module.exports = {
 			"module-resolver",
 			{
 				"alias": {
-					"@seo-analyzer": "./src"
+					"@seo-analyzer": "./src",
+					// Upstream Yoast files import the package by name; keep them byte-identical.
+					"yoastseo": "./src"
 				}
 			}
 		]

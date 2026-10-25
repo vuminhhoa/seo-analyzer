@@ -9,6 +9,8 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This project is a modified version of [`yoastseo`](https://github.com/Yoast/wordpress-seo/tree/trunk/packages/yoastseo) (YoastSEO.js), Copyright (C) Team Yoast, licensed under the GNU General Public License.
 
+The fork point is upstream commit `d30b500` (2025-01-13) on the `upstream` branch. That branch carries the history of `packages/yoastseo/src` from [Yoast/wordpress-seo](https://github.com/Yoast/wordpress-seo), rewritten to `src/`. Files under `src/` that we have not changed are kept byte-identical to upstream.
+
 Main changes from upstream:
 
 - A new assessment set and scoring model (`SeoAssessor`, `ContentAssessor`, `CombinedAssessor`), with weighted, priority-based scores.

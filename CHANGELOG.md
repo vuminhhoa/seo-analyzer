@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Changed
+- Connected the repository to upstream `yoastseo` history (fork point `d30b500`) and added a monthly upstream sync workflow.
+- Restored 87 upstream files that differed only in formatting to their original form, and added a `yoastseo` import alias so they need no changes.
+
 ## [0.1.0]
 
 The first public release as `@vuminhhoa/seo-analyzer`.

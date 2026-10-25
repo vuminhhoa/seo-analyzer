@@ -1,7 +1,7 @@
-import {filter, map} from 'lodash';
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {sanitizeString, removePunctuation} = languageProcessing;
-import TinySegmenter from 'tiny-segmenter';
+import { filter, map } from "lodash";
+import { languageProcessing } from "yoastseo";
+const { sanitizeString, removePunctuation } = languageProcessing;
+import TinySegmenter from "tiny-segmenter";
 
 const segmenter = new TinySegmenter();
 
@@ -12,20 +12,20 @@ const segmenter = new TinySegmenter();
  *
  * @returns {Array} The array with all words.
  */
-export default function(text) {
-  // Strips HTML tags.
-  text = sanitizeString(text);
-  if (text === '') {
-    return [];
-  }
+export default function( text ) {
+	// Strips HTML tags.
+	text = sanitizeString( text );
+	if ( text === "" ) {
+		return [];
+	}
 
-  let words = segmenter.segment(text);
+	let words = segmenter.segment( text );
 
-  words = map(words, function(word) {
-    return removePunctuation(word);
-  });
+	words = map( words, function( word ) {
+		return removePunctuation( word );
+	} );
 
-  return filter(words, function(word) {
-    return word.trim() !== '';
-  });
+	return filter( words, function( word ) {
+		return word.trim() !== "";
+	} );
 }

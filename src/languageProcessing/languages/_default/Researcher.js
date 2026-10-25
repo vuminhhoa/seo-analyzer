@@ -1,34 +1,34 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {AbstractResearcher} = languageProcessing;
+import { languageProcessing } from "yoastseo";
+const { AbstractResearcher } = languageProcessing;
 
 // All helpers
-import getStemmer from './helpers/getStemmer';
+import getStemmer from "./helpers/getStemmer";
 
 /**
  * The researcher contains all the researches, helpers, data, and config.
  */
 export default class Researcher extends AbstractResearcher {
-  /**
-   * Constructor
-   * @param {Paper} paper The Paper object that is needed within the researches.
-   * @constructor
-   */
-  constructor(paper) {
-    super(paper);
+	/**
+	 * Constructor
+	 * @param {Paper} paper The Paper object that is needed within the researches.
+	 * @constructor
+	 */
+	constructor( paper ) {
+		super( paper );
 
-    // Deletes researches that are not available for languages that we haven't supported yet.
-    delete this.defaultResearches.getFleschReadingScore;
-    delete this.defaultResearches.getPassiveVoiceResult;
-    delete this.defaultResearches.getSentenceBeginnings;
-    delete this.defaultResearches.findTransitionWords;
-    delete this.defaultResearches.functionWordsInKeyphrase;
+		// Deletes researches that are not available for languages that we haven't supported yet.
+		delete this.defaultResearches.getFleschReadingScore;
+		delete this.defaultResearches.getPassiveVoiceResult;
+		delete this.defaultResearches.getSentenceBeginnings;
+		delete this.defaultResearches.findTransitionWords;
+		delete this.defaultResearches.functionWordsInKeyphrase;
 
-    Object.assign(this.config, {
-      functionWords: []
-    });
+		Object.assign( this.config, {
+			functionWords: [],
+		} );
 
-    Object.assign(this.helpers, {
-      getStemmer
-    });
-  }
+		Object.assign( this.helpers, {
+			getStemmer,
+		} );
+	}
 }
