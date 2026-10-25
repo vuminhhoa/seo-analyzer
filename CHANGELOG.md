@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-25
+
+The first public release as `@vuminhhoa/seo-analyzer`.
+
 ### Changed: SEO checklist review (October 2026)
 Every check was reviewed against current Google Search Central guidance, with the current Yoast SEO defaults used where Google sets no number. The rationale and sources are in [docs/checklist.md](docs/checklist.md). **Scores change for most pages.**
 
@@ -33,6 +37,7 @@ Every check was reviewed against current Google Search Central guidance, with th
 ### Removed
 - `numberTitle`: Google has no guidance on numbers in titles, and the check encouraged clickbait titles.
 - Unused, WordPress-only code that imported the undeclared `@wordpress/i18n`: `parsedPaper/assess/`, `scoring/renderers/AssessorPresenter.js` and `config/presenter.js`.
+- The unused `loglevel` dependency and the Grunt and legacy ESLint tooling.
 
 ### Fixed
 - `textLength` counted the gaps between words instead of the words ("one two three" counted as 2). It now uses the `wordCountInText` research, which also counts Japanese correctly.
@@ -45,12 +50,20 @@ Every check was reviewed against current Google Search Central guidance, with th
 - The overall score was `NaN` when `h1Count` was not passed. The H1 check now counts `h1Count` (H1s rendered outside the text, default 0) plus the `<h1>` tags in the text.
 - `UrlLength` never set its score, so a short URL counted as 0 points. Overall scores go up for every page.
 - The internal and external link checks were silently dropped in browser bundles without Node polyfills (Vite, for example). `url` and `events` are now dependencies.
+- A broken import path in `parsedPaper/build/tree/metadata/buildTree.js`.
 
 ### Changed
 - Connected the repository to upstream `yoastseo` history (fork point `d30b500`) and added a monthly upstream sync workflow.
 - Restored 87 upstream files that differed only in formatting to their original form, and added a `yoastseo` import alias so they need no changes.
 - Synced with upstream `yoastseo` up to `afe80002` (2026-10-13). Researches now work on the parsed HTML tree, and the stemmers and function word lists are updated. Farsi multi-word function words are now split.
 - The `ParagraphTooLong`, `KeyphraseDensity` and `SubheadingsKeyword` assessments read the new research result shapes.
+- Published as `@vuminhhoa/seo-analyzer`, with the internal import alias `@seo-analyzer`.
+- `CombinedAssessor` runs the SEO and content assessors together.
+- Translation keys use the `SeoAnalyzer.*` prefix.
+- Renamed the related-keywords CSS classes to `SeoAnalyzer-RelatedKeywords__*`.
+- The related-keywords research also reads `data.after_content`.
+- The "Learn more" links point to [docs/checklist.md](docs/checklist.md).
+- `react`, `react-dom` and `@shopify/polaris*` are now peer dependencies.
 
 ### Added
 - `getResearcher( languageOrLocale )` in `languageProcessing/getResearcher`.
@@ -63,21 +76,5 @@ Every check was reviewed against current Google Search Central guidance, with th
 - Added a Vitest suite (`yarn test`) with regression snapshots, and run it in CI.
 - `yarn check:imports` now also fails on undeclared packages and on Node built-ins without a browser polyfill.
 
-## [0.1.0]
-
-The first public release as `@vuminhhoa/seo-analyzer`.
-
-### Changed
-- Published as `@vuminhhoa/seo-analyzer`, with the internal import alias `@seo-analyzer`.
-- `CombinedAssessor` runs the SEO and content assessors together.
-- Translation keys use the `SeoAnalyzer.*` prefix.
-- Renamed the related-keywords CSS classes to `SeoAnalyzer-RelatedKeywords__*`.
-- The related-keywords research also reads `data.after_content`.
-- The "Learn more" links point to [docs/checklist.md](docs/checklist.md).
-- `react`, `react-dom` and `@shopify/polaris*` are now peer dependencies.
-
-### Removed
-- The unused `loglevel` dependency and the Grunt and legacy ESLint tooling.
-
-### Fixed
-- A broken import path in `parsedPaper/build/tree/metadata/buildTree.js`.
+[Unreleased]: https://github.com/vuminhhoa/seo-analyzer/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/vuminhhoa/seo-analyzer/releases/tag/v0.1.0
