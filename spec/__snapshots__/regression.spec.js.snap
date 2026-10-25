@@ -4,15 +4,16 @@ exports[`assessment results > basic article 1`] = `
 {
   "results": {
     "externalLinks": "good (50)",
+    "imageFileNames": "good (50)",
     "images": "good (75)",
     "internalLinks": "good (100)",
     "introductionKeyword": "good (50)",
-    "keyphrase": "good (100)",
+    "keyphrase": "good (0)",
     "keyphraseDensity": "bad (0)",
     "keyphraseLength": "good (50)",
+    "linkText": "good (75)",
     "metaDescriptionKeyword": "good (75)",
     "metaDescriptionLength": "improve (50)",
-    "numberTitle": "good (50)",
     "sentenceBeginnings": "good (75)",
     "singleH1": "good (75)",
     "singleTitle": "bad (0)",
@@ -48,11 +49,10 @@ exports[`assessment results > german text 1`] = `
     "images": "bad (0)",
     "internalLinks": "bad (0)",
     "introductionKeyword": "good (50)",
-    "keyphrase": "good (100)",
+    "keyphrase": "good (0)",
     "keyphraseDensity": "bad (0)",
     "keyphraseLength": "good (50)",
     "metaDescriptionLength": "bad (0)",
-    "numberTitle": "improve (25)",
     "sentenceBeginnings": "good (75)",
     "singleH1": "improve (37.5)",
     "singleTitle": "bad (0)",
@@ -63,7 +63,7 @@ exports[`assessment results > german text 1`] = `
     "titleKeyword": "good (100)",
     "titleWidth": "improve (50)",
   },
-  "score": 47,
+  "score": 43,
 }
 `;
 
@@ -71,20 +71,22 @@ exports[`assessment results > long article 1`] = `
 {
   "results": {
     "externalLinks": "good (50)",
+    "imageFileNames": "good (50)",
     "images": "good (75)",
     "internalLinks": "good (100)",
     "introductionKeyword": "bad (0)",
-    "keyphrase": "good (100)",
+    "keyphrase": "good (0)",
     "keyphraseDensity": "good (75)",
     "keyphraseLength": "good (50)",
+    "linkText": "good (75)",
     "metaDescriptionKeyword": "good (75)",
     "metaDescriptionLength": "improve (50)",
-    "numberTitle": "improve (25)",
     "relatedKeywords": "bad (0)",
     "sentenceBeginnings": "bad (0)",
     "singleH1": "good (75)",
     "singleTitle": "bad (0)",
     "slugKeyword": "good (50)",
+    "subheadingDistribution": "bad (0)",
     "subheadingsKeyword": "good (75)",
     "textImages": "bad (0)",
     "textLength": "good (75)",
@@ -95,6 +97,6 @@ exports[`assessment results > long article 1`] = `
     "titleWidth": "improve (50)",
     "urlLength": "good (50)",
   },
-  "score": 64,
+  "score": 62,
 }
 `;

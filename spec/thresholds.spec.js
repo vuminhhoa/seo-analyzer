@@ -91,13 +91,6 @@ describe( "externalLinks", () => {
 	} );
 } );
 
-describe( "numberTitle", () => {
-	it( "is only a suggestion", () => {
-		expect( status( "numberTitle", "<p>Text.</p>", { title: "Coffee guide" } ) ).toBe( "improve" );
-		expect( status( "numberTitle", "<p>Text.</p>", { title: "7 coffee tips" } ) ).toBe( "good" );
-	} );
-} );
-
 describe( "urlLength", () => {
 	it( "does not apply without a URL", () => {
 		expect( status( "urlLength", "<p>Text.</p>" ) ).toBeUndefined();

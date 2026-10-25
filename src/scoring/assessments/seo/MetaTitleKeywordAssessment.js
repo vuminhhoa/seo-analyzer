@@ -36,7 +36,8 @@ export default class MetaTitleKeywordAssessment extends Assessment {
         bad:
           'No keywords found in meta title. Add one to improve keyword rank and click through rate.',
         good: 'Keyword is included in meta title.',
-        improve: ''
+        improve:
+          'The keyword appears more than once in the title. Use it once: repeated terms look spammy in search results.'
       }
     };
 
@@ -74,11 +75,11 @@ export default class MetaTitleKeywordAssessment extends Assessment {
     const title = paper.getTitle();
     const {count} = matchTextWithWord(title, keyword, paper.getLocale(), null);
 
-    let status = '';
-    if (isNumber(count) && count > 0) {
+    let status = 'bad';
+    if (isNumber(count) && count > 1) {
+      status = 'improve';
+    } else if (isNumber(count) && count > 0) {
       status = 'good';
-    } else {
-      status = 'bad';
     }
     const score = this.getScore(this._config.priority, status);
 

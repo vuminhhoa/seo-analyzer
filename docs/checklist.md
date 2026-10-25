@@ -2,7 +2,7 @@
 
 The checks below run in `CombinedAssessor`. Each heading carries the assessment `id`, which is the key for translations (`SeoAnalyzer.<id>.*`), for `ignoredAssessments` / `skippedAssessments`, and the anchor that each result's "Learn more" link points to.
 
-**Scoring.** Each check returns `good`, `improve` or `bad`, worth 100%, 50% or 0% of its weight. The weight depends on the check's priority: `high` = 100 points, `medium` = 75, `low` = 50. The overall score is the points earned as a percentage of the points available from the checks that apply to the page.
+**Scoring.** Each check returns `good`, `improve` or `bad`, worth 100%, 50% or 0% of its weight. The weight depends on the check's priority: `high` = 100 points, `medium` = 75, `low` = 50. Checks with priority `info` are shown but not scored. The overall score is the points earned as a percentage of the points available from the checks that apply to the page.
 
 **How to read this list.** Google's own guidance is the reference wherever it exists. The guiding principle is to write for people first: Google publishes [no ideal word count, keyword density or heading count](https://developers.google.com/search/docs/fundamentals/seo-starter-guide). Thresholds that Google doesn't define follow the current [Yoast SEO](https://github.com/Yoast/wordpress-seo/tree/trunk/packages/yoastseo) defaults, and their priority is kept low or medium. Every threshold below can be changed through the assessment's config (`parameters`).
 
@@ -50,15 +50,39 @@ Google sets [no title length limit](https://developers.google.com/search/docs/ap
 
 <a name="textimages"></a>
 ### Alt text · `textImages` · high
-**Good:** every image has alt text. **Bad:** one or more images don't.
+**Good:** every image has alt text. **Improve:** an alt text repeats the keyword. **Bad:** one or more images have no alt text.
 
-Google asks for [short, descriptive alt text](https://developers.google.com/search/docs/appearance/google-images) that explains the image in context. Alt text is also essential for screen-reader users.
+Google asks for [short, descriptive alt text](https://developers.google.com/search/docs/appearance/google-images) that explains the image in context, and warns that [filling alt attributes with keywords](https://developers.google.com/search/docs/appearance/google-images) can be treated as spam. Alt text is also essential for screen-reader users.
 
 <a name="schema"></a>
 ### Schema · `schema` · high
 **Good:** structured data is set up for the page type. **Bad:** it isn't. This check only runs when the page type is known from a Shopify URL: products and collections (`Product` schema) or blog posts (`Article` schema).
 
 Structured data makes a page eligible for [rich results](https://developers.google.com/search/docs/appearance/structured-data/search-gallery) such as price, availability and ratings for products. It isn't a ranking factor in itself.
+
+<a name="productschema"></a>
+### Product structured data · `productSchema` · high
+**Good:** the Product data has every required and recommended property. **Improve:** recommended properties are missing. **Bad:** required properties are missing. This check runs when you pass the page's Product JSON-LD object as the `productSchema` paper attribute.
+
+Google's [merchant listing](https://developers.google.com/search/docs/appearance/structured-data/merchant-listing) structured data **requires** `name`, `image` and `offers` with a `price` above zero and a `priceCurrency`. It **recommends** `description`, `brand`, a GTIN, `sku`, `availability`, and `aggregateRating` or `review`. These make the product eligible for richer results, such as price, stock and ratings in Search and Shopping.
+
+<a name="linktext"></a>
+### Link text · `linkText` · medium
+**Good:** every link has descriptive text. **Improve:** a link's text is generic ("click here", "read more", "here"…) or empty. This check only runs when the text has links.
+
+Google asks for anchor text that is ["descriptive, reasonably concise, and relevant"](https://developers.google.com/search/docs/crawling-indexing/links-crawlable) and gives "Click here" and "Read more" as bad examples. Anchor text tells readers and Google what the linked page is about. The list of generic phrases is in `parameters.genericTexts`.
+
+<a name="titleyear"></a>
+### Year in meta title · `titleYear` · medium
+**Good:** a year in the title is the current one. **Improve:** the title mentions a past year. This check only runs when the title contains a year.
+
+Google may [rewrite title links that contain obsolete dates](https://developers.google.com/search/docs/appearance/title-link). If you update a "Best … 2025" page, update the year too. If the year is part of what the page is about (for example a historical event), you can ignore this.
+
+<a name="imagefilenames"></a>
+### Image file names · `imageFileNames` · low
+**Good:** image file names describe the image. **Improve:** a file name is generic, such as `IMG_1234.jpg`, `image1.png`, `Screenshot…` or a hash. Shopify's size suffixes (`_800x`) are ignored.
+
+Google recommends [short, descriptive file names](https://developers.google.com/search/docs/appearance/google-images) as a small signal about the image's subject.
 
 <a name="singletitle"></a>
 ### Duplicate title · `singleTitle` · high
@@ -69,8 +93,8 @@ Google asks for [a distinct title for each page](https://developers.google.com/s
 ## Content SEO
 
 <a name="keyphrase"></a>
-### Use of main keyword · `keyphrase` · high
-**Good:** a focus keyword is set. Most keyword checks need one.
+### Use of main keyword · `keyphrase` · info
+**Good:** a focus keyword is set. Most keyword checks need one, so this check reminds you to set it. It isn't scored, because setting a keyword says nothing about the page itself.
 
 <a name="keyphraselength"></a>
 ### Keyword length · `keyphraseLength` · low
@@ -88,7 +112,7 @@ Google publishes no ideal density. Its [spam policies](https://developers.google
 
 <a name="titlekeyword"></a>
 ### Keyword in meta title · `titleKeyword` · high
-**Good:** the title contains the keyword. The title is one of the strongest signals of what a page is about. Use the keyword once and naturally, since Google treats [repeated terms in titles as spammy](https://developers.google.com/search/docs/appearance/title-link).
+**Good:** the title contains the keyword once. **Improve:** it repeats the keyword. **Bad:** it doesn't contain the keyword. The title is one of the strongest signals of what a page is about, and Google treats [repeated terms in titles as spammy](https://developers.google.com/search/docs/appearance/title-link).
 
 <a name="metadescriptionkeyword"></a>
 ### Meta description keyword · `metaDescriptionKeyword` · medium
@@ -101,10 +125,6 @@ Google publishes no ideal density. Its [spam policies](https://developers.google
 <a name="subheadingskeyword"></a>
 ### Keyword in subheading · `subheadingsKeyword` · medium
 **Good:** at least one subheading (H2–H6) contains the keyword. Google uses headings to [understand the parts of a page](https://developers.google.com/search/docs/fundamentals/seo-starter-guide).
-
-<a name="numbertitle"></a>
-### Number in meta title · `numberTitle` · low
-**Good:** the title contains a number. **Improve:** it doesn't. This is a copywriting suggestion only: numbers (lists, years, quantities) can attract clicks when they fit the content. Google has no guideline on it, so the check never fails.
 
 <a name="images"></a>
 ### Media · `images` · medium
@@ -119,6 +139,12 @@ Google says there is [no preferred word count](https://developers.google.com/sea
 <a name="textparagraphtoolong"></a>
 ### Paragraph length · `textParagraphTooLong` · medium
 **Good:** every paragraph is 150 words or fewer. **Improve:** the longest is 151–200. **Bad:** over 200.
+
+<a name="subheadingdistribution"></a>
+### Subheading distribution · `subheadingDistribution` · medium
+**Good:** no section is longer than 300 words without a subheading. **Improve:** a section has 301–350 words. **Bad:** over 350 words, or a long text with no subheadings at all. This check only runs on texts over 300 words. Languages counted in characters, such as Japanese, use twice these numbers.
+
+Subheadings let readers scan the text, and Google uses headings to [understand the parts of a page](https://developers.google.com/search/docs/fundamentals/seo-starter-guide).
 
 <a name="textsentencelength"></a>
 ### Sentence length · `textSentenceLength` · medium

@@ -21,23 +21,27 @@ import ImageCountAssessment from './seo/ImageCountAssessment';
 import KeyphraseAssessment from './seo/KeyphraseAssessment';
 import SingleTitleAssessment from './seo/SingleTitleAssessment';
 import UrlLengthAssessment from './seo/UrlLengthAssessment';
-import NumberInMetaTitleAssessment from './seo/NumberInMetaTitleAssessment';
 import TextImagesAssessment from './seo/TextImagesAssessment';
 import MetaTitleKeywordAssessment from './seo/MetaTitleKeywordAssessment';
 import SchemaAssessment from './seo/SchemaAssessment';
+import SubheadingDistributionAssessment from './readability/SubheadingDistributionAssessment';
+import LinkTextAssessment from './seo/LinkTextAssessment';
+import TitleYearAssessment from './seo/TitleYearAssessment';
+import ImageFileNameAssessment from './seo/ImageFileNameAssessment';
+import ProductSchemaAssessment from './seo/ProductSchemaAssessment';
 import RelatedKeywordsAssessment from '@seo-analyzer/scoring/assessments/readability/RelatedKeywordsAssessment';
 
 const readability = {
   ParagraphTooLongAssessment,
   SentenceBeginningsAssessment,
   SentenceLengthInTextAssessment,
-  TransitionWordsAssessment
+  TransitionWordsAssessment,
+  SubheadingDistributionAssessment
 };
 
 // We expose the deprecated assessments for backwards compatibility.
 const seo = {
   ImageCountAssessment,
-  NumberInMetaTitleAssessment,
   InternalLinksAssessment,
   TextImagesAssessment,
   MetaTitleKeywordAssessment,
@@ -56,6 +60,10 @@ const seo = {
   SlugKeywordAssessment,
   KeyphraseAssessment,
   SchemaAssessment,
+  ProductSchemaAssessment,
+  LinkTextAssessment,
+  TitleYearAssessment,
+  ImageFileNameAssessment,
   RelatedKeywordsAssessment
 };
 

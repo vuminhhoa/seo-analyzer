@@ -1,4 +1,5 @@
 import {map, sum} from 'lodash';
+import SubheadingDistributionAssessment from '../assessments/readability/SubheadingDistributionAssessment';
 import Assessor from './assessor.js';
 import ParagraphTooLong from '../assessments/readability/ParagraphTooLongAssessment.js';
 import SentenceLengthInText from '../assessments/readability/SentenceLengthInTextAssessment.js';
@@ -25,7 +26,8 @@ export default class ContentAssessor extends Assessor {
       new SentenceLengthInText(),
       new TransitionWords(),
       new SentenceBeginnings(),
-      new RelatedKeywordsAssessment()
+      new RelatedKeywordsAssessment(),
+      new SubheadingDistributionAssessment()
     ];
   }
 

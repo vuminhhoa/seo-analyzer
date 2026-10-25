@@ -19,12 +19,28 @@ Every check was reviewed against current Google Search Central guidance, with th
 - `textParagraphTooLong`: added the `improve` band (151–200 words). It was unreachable before.
 - `textSentenceLength`: now grades the **share** of long sentences (`improve` over 25%, `bad` over 30%) instead of comparing that share to the 20-word limit. Custom `content` messages are no longer overwritten.
 - Most thresholds are now configurable through each assessment's `parameters`.
+- `keyphrase` (focus keyword set) is still shown but **no longer scored**. It used to give 100 points just for typing a keyword. Added the `info` priority (weight 0) for this.
+- `titleKeyword`: a keyword repeated in the title is now `improve`. Google treats repeated terms as spammy.
+- `textImages`: alt text that repeats the keyword is now `improve`. Google warns against keyword-filled alt attributes.
+
+### Added: new checks (October 2026 review)
+- `linkText` (medium): flags generic or empty anchor text such as "click here" or "read more".
+- `titleYear` (medium): flags a past year in the title, since Google may rewrite titles with obsolete dates.
+- `imageFileNames` (low): flags generic image file names (`IMG_1234.jpg`, `image1.png`, hashes).
+- `subheadingDistribution` (medium): flags sections over 300 words without a subheading.
+- `productSchema` (high): checks the Product structured data passed as the new `productSchema` paper attribute against Google's required properties for merchant listings (`name`, `image`, `offers.price`, `priceCurrency`) and recommended ones (`brand`, GTIN, `sku`, `availability`, ratings).
+
+### Removed
+- `numberTitle`: Google has no guidance on numbers in titles, and the check encouraged clickbait titles.
+- Unused, WordPress-only code that imported the undeclared `@wordpress/i18n`: `parsedPaper/assess/`, `scoring/renderers/AssessorPresenter.js` and `config/presenter.js`.
 
 ### Fixed
 - `textLength` counted the gaps between words instead of the words ("one two three" counted as 2). It now uses the `wordCountInText` research, which also counts Japanese correctly.
 - `schema` never set its score, and gave an empty status (`NaN` score) on pages that are not products, collections or blog posts. It now applies only to those pages.
 - `urlLength` gave full points to pages without a URL. It now applies only when there is a slug.
 - `textParagraphTooLong` threw on a text without paragraphs.
+- `TextImagesAssessment#fix` built the fallback alt text as just the shop name, because of operator precedence. It now uses "shop | title" as intended.
+- The overall score was `NaN` when no scored check applied. It is now 0.
 - `SubheadingsKeyword` always failed because it read a property that does not exist (`match`).
 - The overall score was `NaN` when `h1Count` was not passed. The H1 check now counts `h1Count` (H1s rendered outside the text, default 0) plus the `<h1>` tags in the text.
 - `UrlLength` never set its score, so a short URL counted as 0 points. Overall scores go up for every page.
@@ -40,9 +56,6 @@ Every check was reviewed against current Google Search Central guidance, with th
 - `getResearcher( languageOrLocale )` in `languageProcessing/getResearcher`.
 - `Paper#getProvidedImages()` and `Paper#hasProvidedImages()`. With the `providedImages` attribute, the image researches assess only the images you pass in.
 - `yarn check:imports`, run as part of `yarn lint`, fails on imports that do not resolve.
-
-### Removed
-- Unused, WordPress-only code that imported the undeclared `@wordpress/i18n`: `parsedPaper/assess/`, `scoring/renderers/AssessorPresenter.js` and `config/presenter.js`.
 
 ### Development
 - Added a playground (`yarn dev`): a Vite + Polaris app that runs the analysis from `src/` with hot reload and shows the raw research output.

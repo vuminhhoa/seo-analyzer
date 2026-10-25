@@ -1,4 +1,8 @@
 import Assessor from './assessor';
+import ImageFileNameAssessment from '../assessments/seo/ImageFileNameAssessment';
+import LinkTextAssessment from '../assessments/seo/LinkTextAssessment';
+import ProductSchemaAssessment from '../assessments/seo/ProductSchemaAssessment';
+import TitleYearAssessment from '../assessments/seo/TitleYearAssessment';
 import IntroductionKeywordAssessment from '../assessments/seo/IntroductionKeywordAssessment';
 import KeyphraseLengthAssessment from '../assessments/seo/KeyphraseLengthAssessment';
 import MetaDescriptionKeywordAssessment from '../assessments/seo/MetaDescriptionKeywordAssessment';
@@ -15,7 +19,6 @@ import SingleH1Assessment from '../assessments/seo/SingleH1Assessment';
 import KeyphraseAssessment from '../assessments/seo/KeyphraseAssessment';
 import SingleTitleAssessment from '../assessments/seo/SingleTitleAssessment';
 import UrlLengthAssessment from '../assessments/seo/UrlLengthAssessment';
-import NumberInMetaTitleAssessment from '../assessments/seo/NumberInMetaTitleAssessment';
 import TextImagesAssessment from '../assessments/seo/TextImagesAssessment';
 import MetaTitleKeywordAssessment from '../assessments/seo/MetaTitleKeywordAssessment';
 import SchemaAssessment from '@seo-analyzer/scoring/assessments/seo/SchemaAssessment';
@@ -36,7 +39,6 @@ export default class SEOAssessor extends Assessor {
     this._assessments = [
       new MetaTitleKeywordAssessment(),
       new TextImagesAssessment(),
-      new NumberInMetaTitleAssessment(),
       new IntroductionKeywordAssessment(),
       new KeyphraseLengthAssessment(),
       new MetaDescriptionKeywordAssessment(),
@@ -53,7 +55,11 @@ export default class SEOAssessor extends Assessor {
       new TitleWidth(),
       new SlugKeywordAssessment(),
       new SingleH1Assessment(),
-      new SchemaAssessment()
+      new SchemaAssessment(),
+      new ProductSchemaAssessment(),
+      new LinkTextAssessment(),
+      new TitleYearAssessment(),
+      new ImageFileNameAssessment()
     ];
   }
 }
