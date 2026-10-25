@@ -1,0 +1,15 @@
+# Normalize line endings to LF; Windows scripts keep CRLF.
+* text=auto eol=lf
+*.{bat,cmd} text eol=crlf
+
+*.{png,jpg,jpeg,gif,webp,ico,avif} binary
+*.{woff,woff2,ttf,otf,eot} binary
+*.{pdf,zip,gz,jar} binary
+
+# Collapse lockfiles in diffs.
+package-lock.json linguist-generated=true -diff
+yarn.lock linguist-generated=true -diff
+pnpm-lock.yaml linguist-generated=true -diff
+bun.lock linguist-generated=true -diff
+
+text eol=lf

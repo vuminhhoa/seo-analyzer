@@ -1,0 +1,34 @@
+.SeoAnalyzer-RelatedKeywords__Description {
+  line-height: 16px;
+  color: #6d7175;
+  position: relative;
+  transition: all 0.25s ease-in;
+
+  a {
+    text-decoration: unset;
+  }
+
+  &:has(.SeoAnalyzer-RelatedKeywords__DescriptionBody-expanded) {
+    transition: all 0.25s ease-out;
+  }
+
+  .SeoAnalyzer-RelatedKeywords__DescriptionBody-collapsed {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+
+    > p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+  }
+
+  .SeoAnalyzer-RelatedKeywords__Description-Backdrop {
+    float: right;
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "include": [
+    "src/**.js",
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "allowJs": true,
+    "checkJs": false,
+    "outDir": "./types",
+    "module": "es2022",
+    "paths": {
+      "@seo-analyzer/*": ["src/*"]
+    },
+    "strict": true,
+    "skipLibCheck": true,
+  }
+}
