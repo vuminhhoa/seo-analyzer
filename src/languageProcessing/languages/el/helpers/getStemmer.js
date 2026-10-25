@@ -1,7 +1,7 @@
-import {get} from 'lodash';
-import {languageProcessing} from '@seo-analyzer/index.js';
-import stem from './internal/stem';
-const {baseStemmer} = languageProcessing;
+import { get } from "lodash";
+import { languageProcessing } from "yoastseo";
+import stem from "./internal/stem";
+const { baseStemmer } = languageProcessing;
 
 /**
  * Returns the stemmer for a researcher.
@@ -10,12 +10,12 @@ const {baseStemmer} = languageProcessing;
  *
  * @returns {Function} The stemmer.
  */
-export default function getStemmer(researcher) {
-  const morphologyData = get(researcher.getData('morphology'), 'el', false);
+export default function getStemmer( researcher ) {
+	const morphologyData = get( researcher.getData( "morphology" ), "el", false );
 
-  if (morphologyData) {
-    return word => stem(word, morphologyData);
-  }
+	if ( morphologyData ) {
+		return word => stem( word, morphologyData );
+	}
 
-  return baseStemmer;
+	return baseStemmer;
 }

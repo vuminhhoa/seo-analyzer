@@ -1,16 +1,16 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {getClausesSplitOnStopWords, createRegexFromArray} = languageProcessing;
+import { languageProcessing } from "yoastseo";
+const { getClausesSplitOnStopWords, createRegexFromArray } = languageProcessing;
 
-import HungarianClause from '../values/Clause';
-import auxiliaries from '../config/internal/auxiliaries.js';
-import stopWords from '../config/stopWords.js';
+import HungarianClause from "../values/Clause";
+import auxiliaries from "../config/internal/auxiliaries.js";
+import stopWords from "../config/stopWords.js";
 
 const options = {
-  Clause: HungarianClause,
-  regexes: {
-    auxiliaryRegex: createRegexFromArray(auxiliaries.allAuxiliaries),
-    stopwordRegex: createRegexFromArray(stopWords)
-  }
+	Clause: HungarianClause,
+	regexes: {
+		auxiliaryRegex: createRegexFromArray( auxiliaries.allAuxiliaries ),
+		stopwordRegex: createRegexFromArray( stopWords ),
+	},
 };
 
 /**
@@ -20,6 +20,6 @@ const options = {
  *
  * @returns {Array} The array with all clauses that have an auxiliary.
  */
-export default function getHungarianClauses(sentence) {
-  return getClausesSplitOnStopWords(sentence, options);
+export default function getHungarianClauses( sentence ) {
+	return getClausesSplitOnStopWords( sentence, options );
 }

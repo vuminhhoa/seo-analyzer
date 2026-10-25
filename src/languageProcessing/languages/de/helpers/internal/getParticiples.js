@@ -1,10 +1,10 @@
-import {forEach} from 'lodash';
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {getWords} = languageProcessing;
+import { forEach } from "lodash";
+import { languageProcessing } from "yoastseo";
+const { getWords } = languageProcessing;
 
-import regexFunctionFactory from '../../config/internal/passiveVoiceRegex.js';
+import regexFunctionFactory from "../../config/internal/passiveVoiceRegex.js";
 const regexFunction = regexFunctionFactory();
-import irregularParticiples from '../../config/internal/passiveVoiceIrregulars.js';
+import irregularParticiples from "../../config/internal/passiveVoiceIrregulars.js";
 
 const verbsBeginningWithErVerEntBeZerHerUber = regexFunction.verbsBeginningWithErVerEntBeZerHerUber;
 const verbsBeginningWithGe = regexFunction.verbsBeginningWithGe;
@@ -19,22 +19,21 @@ const verbsEndingWithIert = regexFunction.verbsEndingWithIert;
  *
  * @returns {Array} The array with the German participles found.
  */
-export default function(clauseText) {
-  const words = getWords(clauseText);
+export default function( clauseText ) {
+	const words = getWords( clauseText );
 
-  const foundParticiples = [];
+	const foundParticiples = [];
 
-  forEach(words, function(word) {
-    if (
-      verbsBeginningWithGe(word).length !== 0 ||
-      verbsWithGeInMiddle(word).length !== 0 ||
-      verbsBeginningWithErVerEntBeZerHerUber(word).length !== 0 ||
-      verbsWithErVerEntBeZerHerUberInMiddle(word).length !== 0 ||
-      verbsEndingWithIert(word).length !== 0 ||
-      irregularParticiples.includes(word)
-    ) {
-      foundParticiples.push(word);
-    }
-  });
-  return foundParticiples;
+	forEach( words, function( word ) {
+		if ( verbsBeginningWithGe( word ).length !== 0 ||
+			verbsWithGeInMiddle( word ).length !== 0 ||
+			verbsBeginningWithErVerEntBeZerHerUber( word ).length !== 0 ||
+			verbsWithErVerEntBeZerHerUberInMiddle( word ).length !== 0 ||
+			verbsEndingWithIert( word ).length !== 0 ||
+			irregularParticiples.includes( word )
+		) {
+			foundParticiples.push( word );
+		}
+	} );
+	return foundParticiples;
 }

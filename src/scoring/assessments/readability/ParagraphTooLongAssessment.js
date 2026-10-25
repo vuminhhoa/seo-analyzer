@@ -81,7 +81,7 @@ export default class ParagraphTooLongAssessment extends Assessment {
       status = 'good';
     }
 
-    const longestParagraphLength = paragraphsLength[0].countLength;
+    const longestParagraphLength = paragraphsLength[0].paragraphLength;
 
     if (longestParagraphLength <= config.parameters.recommendedLength) {
       status = 'good';
@@ -128,7 +128,7 @@ export default class ParagraphTooLongAssessment extends Assessment {
    */
   sortParagraphs(paragraphs) {
     return paragraphs.sort(function(a, b) {
-      return b.countLength - a.countLength;
+      return b.paragraphLength - a.paragraphLength;
     });
   }
 

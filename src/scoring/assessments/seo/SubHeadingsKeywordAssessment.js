@@ -69,7 +69,7 @@ export default class SubHeadingsKeywordAssessment extends Assessment {
    */
   calculateResult(paper, i18n) {
     let status = '';
-    if (this._subHeadings.match > 0) {
+    if (this._subHeadings.matches.numberOfSubheadings > 0) {
       status = 'good';
     } else {
       status = 'bad';

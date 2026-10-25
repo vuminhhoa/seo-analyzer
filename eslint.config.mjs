@@ -27,7 +27,7 @@ export default [
 		languageOptions: { globals: { ...globals.node } },
 	},
 	{
-		files: [ "babel.config.js", "eslint.config.mjs" ],
+		files: [ "babel.config.js", "eslint.config.mjs", "scripts/**" ],
 		languageOptions: { globals: { ...globals.node } },
 	},
 ];

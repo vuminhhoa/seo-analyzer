@@ -1,16 +1,16 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {getClausesSplitOnStopWords, createRegexFromArray} = languageProcessing;
+import { languageProcessing } from "yoastseo";
+const { getClausesSplitOnStopWords, createRegexFromArray } = languageProcessing;
 
-import DutchClause from '../values/Clause';
-import auxiliaries from '../config/internal/passiveVoiceAuxiliaries.js';
-import stopwords from '../config/stopWords.js';
+import DutchClause from "../values/Clause";
+import auxiliaries from "../config/internal/passiveVoiceAuxiliaries.js";
+import stopwords from "../config/stopWords.js";
 
 const options = {
-  Clause: DutchClause,
-  regexes: {
-    auxiliaryRegex: createRegexFromArray(auxiliaries),
-    stopwordRegex: createRegexFromArray(stopwords)
-  }
+	Clause: DutchClause,
+	regexes: {
+		auxiliaryRegex: createRegexFromArray( auxiliaries ),
+		stopwordRegex: createRegexFromArray( stopwords ),
+	},
 };
 
 /**
@@ -20,6 +20,6 @@ const options = {
  *
  * @returns {Array} The array with all clauses that have an auxiliary.
  */
-export default function getClauses(sentence) {
-  return getClausesSplitOnStopWords(sentence, options);
+export default function getClauses( sentence ) {
+	return getClausesSplitOnStopWords( sentence, options );
 }

@@ -1,16 +1,16 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {getClausesSplitOnStopWords, createRegexFromArray} = languageProcessing;
+import { languageProcessing } from "yoastseo";
+const { getClausesSplitOnStopWords, createRegexFromArray } = languageProcessing;
 
-import GreekClause from '../values/Clause';
-import auxiliaries from '../config/internal/auxiliaries.js';
-import stopWords from '../config/stopWords';
+import GreekClause from "../values/Clause";
+import auxiliaries from "../config/internal/auxiliaries.js";
+import stopWords from "../config/stopWords";
 
 const options = {
-  Clause: GreekClause,
-  regexes: {
-    auxiliaryRegex: createRegexFromArray(auxiliaries),
-    stopwordRegex: createRegexFromArray(stopWords)
-  }
+	Clause: GreekClause,
+	regexes: {
+		auxiliaryRegex: createRegexFromArray( auxiliaries ),
+		stopwordRegex: createRegexFromArray( stopWords ),
+	},
 };
 
 /**
@@ -20,6 +20,6 @@ const options = {
  *
  * @returns {Array} The array with all clauses that have an auxiliary.
  */
-export default function getGreekClauses(sentence) {
-  return getClausesSplitOnStopWords(sentence, options);
+export default function getGreekClauses( sentence ) {
+	return getClausesSplitOnStopWords( sentence, options );
 }

@@ -434,6 +434,23 @@ export default class Paper {
   }
 
   /**
+   * Returns the images the producer provided for the image assessments, if any.
+   * @returns {?Array<{src: string, alt: string}>} Returns the provided images.
+   */
+  getProvidedImages() {
+    return this._attributes.providedImages;
+  }
+
+  /**
+   * Checks whether the producer provided the item's images, opting the image assessments into scoring them.
+   * An empty array counts as provided: it is an item without images, which must still be scored as such.
+   * @returns {boolean} Returns true if the Paper carries an images array.
+   */
+  hasProvidedImages() {
+    return !isNil(this._attributes.providedImages);
+  }
+
+  /**
    * Checks whether a text title is available.
    * @returns {boolean} Returns true if the Paper has a text title.
    */

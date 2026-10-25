@@ -1,5 +1,5 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {baseStemmer} = languageProcessing;
+import { languageProcessing } from "yoastseo";
+const { baseStemmer } = languageProcessing;
 
 /**
  * Returns the stemmer for a researcher.
@@ -9,5 +9,5 @@ const {baseStemmer} = languageProcessing;
  * @returns {Function} The stemmer.
  */
 export default function getStemmer() {
-  return baseStemmer;
+	return baseStemmer;
 }

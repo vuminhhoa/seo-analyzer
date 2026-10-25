@@ -1,5 +1,5 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
-const {getWords} = languageProcessing;
+import { languageProcessing } from "yoastseo";
+const { getWords } = languageProcessing;
 
 /**
  * Creates an array of participles found in a clause.
@@ -8,9 +8,9 @@ const {getWords} = languageProcessing;
  *
  * @returns {Array} The list with participles found.
  */
-export default function(clauseText) {
-  const words = getWords(clauseText);
-  const participleEndingsRegex = new RegExp('(ný|ní|tý|ná|tá|né|té)$');
+export default function( clauseText ) {
+	const words = getWords( clauseText );
+	const participleEndingsRegex = new RegExp( "(ný|ní|tý|ná|tá|né|té)$" );
 
-  return words.filter(word => participleEndingsRegex.test(word));
+	return words.filter( word => participleEndingsRegex.test( word ) );
 }

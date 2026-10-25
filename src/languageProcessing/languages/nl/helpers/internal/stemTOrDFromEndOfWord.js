@@ -1,11 +1,14 @@
-import {languageProcessing} from '@seo-analyzer/index.js';
+import { languageProcessing } from "yoastseo";
 const {
-  exceptionListHelpers: {checkIfWordEndingIsOnExceptionList, checkIfWordIsOnListThatCanHavePrefix}
+	exceptionListHelpers: {
+		checkIfWordEndingIsOnExceptionList,
+		checkIfWordIsOnListThatCanHavePrefix,
+	},
 } = languageProcessing;
 
-import {detectAndStemRegularParticiple} from './detectAndStemRegularParticiple';
-import {generateCorrectStemWithTAndDEnding} from './getStemWordsWithTAndDEnding';
-import checkExceptionsWithFullForms from './checkExceptionsWithFullForms';
+import { detectAndStemRegularParticiple } from "./detectAndStemRegularParticiple";
+import { generateCorrectStemWithTAndDEnding } from "./getStemWordsWithTAndDEnding";
+import checkExceptionsWithFullForms from "./checkExceptionsWithFullForms";
 
 /**
  * If the word ending in -t/-d was not matched in any of the checks for whether -t/-d should be stemmed or not, other checks still need
@@ -17,30 +20,24 @@ import checkExceptionsWithFullForms from './checkExceptionsWithFullForms';
  * @param {string}	word				The unstemmed word.
  * @returns {boolean}	Whether one of the conditions returns true or not.
  */
-const checkIfTorDIsUnambiguous = function(morphologyDataNL, stemmedWord, word) {
-  const wordsNotToBeStemmed = morphologyDataNL.stemExceptions.wordsNotToBeStemmedExceptions;
-  const adjectivesEndingInRd = morphologyDataNL.stemExceptions.removeSuffixesFromFullForms[1].forms;
-  const wordsEndingInTOrDExceptionList =
-    morphologyDataNL.ambiguousTAndDEndings.tOrDArePartOfStem.doNotStemTOrD;
+const checkIfTorDIsUnambiguous = function( morphologyDataNL, stemmedWord, word ) {
+	const wordsNotToBeStemmed = morphologyDataNL.stemExceptions.wordsNotToBeStemmedExceptions;
+	const adjectivesEndingInRd = morphologyDataNL.stemExceptions.removeSuffixesFromFullForms[ 1 ].forms;
+	const wordsEndingInTOrDExceptionList = morphologyDataNL.ambiguousTAndDEndings.tOrDArePartOfStem.doNotStemTOrD;
 
-  // Run the checks below. If one of the conditions returns true, return the stem.
-  if (
-    detectAndStemRegularParticiple(morphologyDataNL, word) ||
-    generateCorrectStemWithTAndDEnding(morphologyDataNL, word) ||
-    checkIfWordIsOnListThatCanHavePrefix(
-      word,
-      wordsNotToBeStemmed.verbs,
-      morphologyDataNL.pastParticipleStemmer.compoundVerbsPrefixes
-    ) ||
-    checkIfWordEndingIsOnExceptionList(word, wordsNotToBeStemmed.endingMatch) ||
-    wordsNotToBeStemmed.exactMatch.includes(word) ||
-    adjectivesEndingInRd.includes(stemmedWord) ||
-    checkExceptionsWithFullForms(morphologyDataNL, word) ||
-    stemmedWord.endsWith('heid') ||
-    checkIfWordEndingIsOnExceptionList(stemmedWord, wordsEndingInTOrDExceptionList)
-  ) {
-    return true;
-  }
+	// Run the checks below. If one of the conditions returns true, return the stem.
+	if ( detectAndStemRegularParticiple( morphologyDataNL, word ) ||
+		 generateCorrectStemWithTAndDEnding( morphologyDataNL, word ) ||
+		 checkIfWordIsOnListThatCanHavePrefix( word, wordsNotToBeStemmed.verbs, morphologyDataNL.pastParticipleStemmer.compoundVerbsPrefixes ) ||
+		 checkIfWordEndingIsOnExceptionList( word, wordsNotToBeStemmed.endingMatch ) ||
+		 wordsNotToBeStemmed.exactMatch.includes( word ) ||
+		 adjectivesEndingInRd.includes( stemmedWord ) ||
+		 checkExceptionsWithFullForms( morphologyDataNL, word ) ||
+		 stemmedWord.endsWith( "heid" ) ||
+		 checkIfWordEndingIsOnExceptionList( stemmedWord, wordsEndingInTOrDExceptionList )
+	) {
+		return true;
+	}
 };
 
 /**
@@ -56,10 +53,10 @@ const checkIfTorDIsUnambiguous = function(morphologyDataNL, stemmedWord, word) {
  *
  * @returns {?string}				    The stemmed word or null if the -t/-d should not be stemmed.
  */
-export function stemTOrDFromEndOfWord(morphologyDataNL, stemmedWord, word) {
-  if (checkIfTorDIsUnambiguous(morphologyDataNL, stemmedWord, word)) {
-    return null;
-  }
-  // If none of the conditions above is true, stem the t/d from the word.
-  return stemmedWord.slice(0, -1);
+export function stemTOrDFromEndOfWord( morphologyDataNL, stemmedWord, word ) {
+	if ( checkIfTorDIsUnambiguous( morphologyDataNL, stemmedWord, word ) ) {
+		return null;
+	}
+	// If none of the conditions above is true, stem the t/d from the word.
+	return stemmedWord.slice( 0, -1 );
 }
