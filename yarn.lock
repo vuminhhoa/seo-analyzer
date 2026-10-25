@@ -1070,15 +1070,10 @@
   resolved "https://registry.yarnpkg.com/@nicolo-ribaudo/chokidar-2/-/chokidar-2-2.1.8-no-fsevents.3.tgz#323d72dd25103d0c4fbdce89dadf574a787b1f9b"
   integrity sha512-s88O1aVtXftvp5bCPB7WnmXc5IwOZZ7YPuwNPt+GtOOXpPvad1LfbmjYv+qII7zP6RU2QGnqve27dnLycEnyEQ==
 
-"@shopify/polaris-icons@^8.2.0":
-  version "8.11.1"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-8.11.1.tgz#b47f39bba109d53e72dadc6200f705ed46d92c56"
-  integrity sha512-2HLzvJWMejKIwS5P2bs7k5CAjBKwPnD/iy9ncPzcgqRjmFInBXLtUXFQhPWDw6JwXzb1ZjNQK/ssTctcfz87Sw==
-
-"@shopify/polaris-icons@^9.3.0":
-  version "9.3.0"
-  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-9.3.0.tgz#560e268244904cafd4ad6e1547a8d57d7a9be5b4"
-  integrity sha512-fnH5Lcd3WFZNjlxGYGNtnjeq3P2xonRV8vChW4PqBfxdKlY/GQ/3/rIuxHzIgmLL0zukeZUaqERUN0lwSU+Xmg==
+"@shopify/polaris-icons@^9.3.0", "@shopify/polaris-icons@^9.3.1":
+  version "9.3.1"
+  resolved "https://registry.yarnpkg.com/@shopify/polaris-icons/-/polaris-icons-9.3.1.tgz#945aff6632c70a8086ca62d99c2e68257ea59e5a"
+  integrity sha512-16BIFAT93LJ8X4YRXz5cR9ZPHeErMg3DYS0gyTPNPkd0E5IBPoTxPINjn2b4Mr9Sc1x4RfI4AqPcV8ut0D1J5w==
 
 "@shopify/polaris-tokens@^9.4.0":
   version "9.4.0"
