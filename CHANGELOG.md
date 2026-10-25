@@ -28,6 +28,8 @@ All notable changes to this project are documented here. The format follows [Kee
 - Unused, WordPress-only code that imported the undeclared `@wordpress/i18n`: `parsedPaper/assess/`, `scoring/renderers/AssessorPresenter.js` and `config/presenter.js`.
 
 ### Development
+- Added a playground (`yarn dev`): a Vite + Polaris app that runs the analysis from `src/` with hot reload and shows the raw research output.
+- Added `.nvmrc`.
 - Added a Vitest suite (`yarn test`) with regression snapshots, and run it in CI.
 - `yarn check:imports` now also fails on undeclared packages and on Node built-ins without a browser polyfill.
 

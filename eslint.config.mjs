@@ -4,7 +4,7 @@ import globals from "globals";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
-	{ ignores: [ "build/", "types/", "src/vendor/" ] },
+	{ ignores: [ "build/", "types/", "src/vendor/", "playground/dist/" ] },
 	{ linterOptions: { reportUnusedDisableDirectives: "off" } },
 	js.configs.recommended,
 	react.configs.flat.recommended,
@@ -27,7 +27,7 @@ export default [
 		languageOptions: { globals: { ...globals.node } },
 	},
 	{
-		files: [ "babel.config.js", "eslint.config.mjs", "vitest.config.mjs", "scripts/**", "spec/**" ],
+		files: [ "babel.config.js", "eslint.config.mjs", "vitest.config.mjs", "vite.shared.mjs", "playground/vite.config.mjs", "scripts/**", "spec/**" ],
 		languageOptions: { globals: { ...globals.node } },
 	},
 ];

@@ -7,18 +7,35 @@ Thanks for taking the time to contribute!
 ```bash
 git clone https://github.com/vuminhhoa/seo-analyzer.git
 cd seo-analyzer
+nvm use        # Node version from .nvmrc (20.10 or newer works)
 yarn install
-yarn lint
-yarn build
+yarn dev       # playground at http://localhost:5173
 ```
 
 Requires Node.js 20.10 or newer, and Yarn 1.
+
+## Development workflow
+
+| Command | What it does |
+| --- | --- |
+| `yarn dev` | **Playground.** Edit the HTML, keyword and meta fields and see every assessment's result, score and message. It runs from `src/` with hot reload, so a change to a research or an assessment shows up immediately. Tick *Show raw research output* to inspect what each research returned. |
+| `yarn test:watch` | Vitest in watch mode. |
+| `yarn test` | Unit tests plus **regression snapshots** of every assessment on the sample papers in `spec/fixtures/papers.js`. |
+| `yarn lint` | ESLint, plus `check:imports` (unresolved files, undeclared packages, Node built-ins without a browser polyfill). |
+| `yarn build` | Babel to `build/`, and TypeScript declarations to `types/`. |
+
+A typical change:
+
+1. Reproduce it in the playground. To keep the case around, add it to `spec/fixtures/papers.js`, where it also shows up in the playground's *Sample paper* list.
+2. Change the research or assessment and watch the playground update.
+3. Run `yarn test`. If a snapshot changed **on purpose**, check the diff and accept it with `yarn test -u`. Unexpected snapshot changes are regressions.
+4. For logic that the snapshots don't pin down clearly, add a focused unit test next to `spec/singleH1.spec.js`.
 
 ## Pull requests
 
 1. Fork the repo and create a branch from `main`.
 2. Keep each change focused, with one topic per PR.
-3. Make sure `yarn lint` and `yarn build` pass.
+3. Make sure `yarn lint`, `yarn test` and `yarn build` pass. CI runs all three.
 4. If you add or change an assessment, update [docs/checklist.md](docs/checklist.md) and give the assessment a `docUrl` pointing to its section there.
 5. Describe *what* changed and *why* in the PR description.
 

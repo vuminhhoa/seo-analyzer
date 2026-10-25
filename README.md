@@ -106,6 +106,7 @@ Pass `ignoredAssessments` or `skippedAssessments` (arrays of assessment ids) as 
 
 ```bash
 yarn install
+yarn dev      # playground with hot reload: http://localhost:5173
 yarn lint     # ESLint + import check (unresolved files, undeclared packages, Node built-ins)
 yarn test     # Vitest: unit tests + regression snapshots (yarn test -u to accept intended changes)
 yarn build    # Babel -> build/, TypeScript declarations -> types/
