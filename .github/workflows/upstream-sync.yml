@@ -18,11 +18,12 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - run: pip install git-filter-repo
+      - run: pip install git-filter-repo==2.47.0
       - run: git fetch origin upstream:upstream || true
       - run: scripts/sync-upstream.sh
       - name: Push upstream branch and open PR
