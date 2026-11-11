@@ -75,9 +75,10 @@ export function countWordInHtml(htmlString, getCharCount = false) {
  */
 export function calculateKeywordDensity(htmlString, keyword) {
   const spacedHtml = htmlString.replace(/(<[^>]+>)/g, ' $1 ');
-  const tempElement = document.createElement('div');
-  tempElement.innerHTML = spacedHtml;
-  const textContent = tempElement.textContent || tempElement.innerText || '';
+  // DOMParser returns an inert document: unlike innerHTML on an element of the live document,
+  // it doesn't load images or run event handlers (e.g. <img onerror>) from the analyzed HTML.
+  const doc = new DOMParser().parseFromString(spacedHtml, 'text/html');
+  const textContent = doc.body.textContent || '';
   const cleanedText = textContent
     .trim()
     .replace(/\s+/g, ' ')
