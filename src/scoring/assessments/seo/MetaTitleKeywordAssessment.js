@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text} from '@shopify/polaris';
 
-import {isNumber, merge} from 'lodash';
+import {escapeRegExp, isNumber, merge} from 'lodash';
 import Assessment from '../assessment';
 import AssessmentResult from '../../../values/AssessmentResult';
 import matchTextWithWord from '@seo-analyzer/languageProcessing/helpers/match/matchTextWithWord';
@@ -71,7 +71,8 @@ export default class MetaTitleKeywordAssessment extends Assessment {
    * @returns {Object} Result object with score and text.
    */
   calculateResult(paper, i18n) {
-    const keyword = paper.getKeyword();
+    // The matcher builds a regex from the keyword, so escape it like findKeyphraseInSEOTitle does.
+    const keyword = escapeRegExp(paper.getKeyword());
     const title = paper.getTitle();
     const {count} = matchTextWithWord(title, keyword, paper.getLocale(), null);
 

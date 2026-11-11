@@ -1,3 +1,5 @@
+import {escapeRegExp} from 'lodash';
+
 /**
  * Checks how many sentences from a text contain at least one transition word or two-part transition word
  * that are defined in the transition words config and two part transition words config.
@@ -54,7 +56,7 @@ const countWordsInRelatedKeywords = ({related_keywords, string}) => {
   let isWordUsedExceeding = false;
 
   related_keywords.forEach(({text}) => {
-    const keyword = text.toLowerCase();
+    const keyword = escapeRegExp(String(text).toLowerCase());
     const length = (string.match(new RegExp(`\\b${keyword}\\b`, 'g')) || []).length;
     const percentage = parseFloat(((length / total) * 100).toFixed(1));
     if (!isWordUsedExceeding) {

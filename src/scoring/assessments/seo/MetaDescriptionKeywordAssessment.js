@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text} from '@shopify/polaris';
 
-import {isNumber, merge} from 'lodash';
+import {escapeRegExp, isNumber, merge} from 'lodash';
 import Assessment from '../assessment';
 import AssessmentResult from '../../../values/AssessmentResult';
 import {KeyIcon} from '@shopify/polaris-icons';
@@ -71,7 +71,8 @@ class MetaDescriptionKeywordAssessment extends Assessment {
    * @returns {Object} Result object with score and text.
    */
   calculateResult(paper, i18n) {
-    const keyword = paper.getKeyword();
+    // The matcher builds a regex from the keyword, so escape it like findKeyphraseInSEOTitle does.
+    const keyword = escapeRegExp(paper.getKeyword());
     const description = paper.getDescription();
     const {count} = matchTextWithWord(description, keyword, paper.getLocale(), null);
 
