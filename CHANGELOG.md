@@ -4,6 +4,11 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Fixed
+- `helpers.calculateKeywordDensity` parses the HTML in an inert `DOMParser` document instead of the live page.
+- Keywords and related keywords are escaped before being used in regular expressions. Keywords such as `c++` no longer break the meta title and meta description checks.
+- Video counting stays fast on large or malformed HTML.
+
 ## [0.1.0] - 2026-10-25
 
 The first public release as `@vuminhhoa/seo-analyzer`.
