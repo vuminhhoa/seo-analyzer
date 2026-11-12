@@ -3,6 +3,8 @@ module.exports = {
 	plugins: [
 		[
 			"module-resolver",
+			// No `root` option: the plugin globs it with glob 9's default export, and
+			// package.json resolves its glob to 14 (security fix), which has none.
 			{
 				"alias": {
 					"@seo-analyzer": "./src",

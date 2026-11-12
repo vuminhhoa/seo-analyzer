@@ -93,6 +93,7 @@
     "vitest": "4.1.12"
   },
   "resolutions": {
+    "babel-plugin-module-resolver/glob": "^14.0.5",
     "lodash": "^4.18.1",
     "vite": "6.4.5"
   }
